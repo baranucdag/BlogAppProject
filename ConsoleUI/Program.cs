@@ -21,12 +21,25 @@ namespace ConsoleUI
             //var result = categoryService.GetById(1);
             //Console.WriteLine(result.GetType());
 
-            BlogTagService blogTagService = new BlogTagService(new EFBlogTagDal());
-            var result =blogTagService.GetAll();
-            foreach (var tag in result)
+            //BlogTagService blogTagService = new BlogTagService(new EFBlogTagDal());
+            //var result =blogTagService.GetAll();
+            //foreach (var tag in result)
+            //{
+            //    Console.WriteLine(tag.TagId);
+            //}
+
+           BlogService blogService = new BlogService(new EFBlogDal(),new BlogTagService(new EFBlogTagDal()));
+           var result =  blogService.GetBlogTags(9);
+
+            foreach (var item in result)
             {
-                Console.WriteLine(tag.TagId);
+                Console.WriteLine(item.TagId);
             }
+
+            TagService tagService = new TagService(new EFTagDal());
+            var result1 = tagService.GetById(3);
+            Console.WriteLine(result1.TagName);
+           
         }
     }
 }

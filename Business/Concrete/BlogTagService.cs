@@ -12,6 +12,7 @@ namespace Business.Concrete
     public class BlogTagService : IBlogTagService
     {
         private IBlogTagDal _blogTagDal;
+      
         public BlogTagService(IBlogTagDal blogTagDal)
         {
             _blogTagDal = blogTagDal;

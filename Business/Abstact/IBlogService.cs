@@ -11,11 +11,10 @@ namespace Business.Abstact
     public interface IBlogService
     {
         List<Blog> GetAll();
-        List<BlogDetail> GetCategories();
+        List<BlogDetail> GetBlogDetail(int id);
         List<BlogTag> GetBlogTags(int id);
         void Add(Blog blog);
         void Update(Blog blog);
         void Delete(Blog blog);
-
     }
 }

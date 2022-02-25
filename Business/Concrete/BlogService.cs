@@ -40,9 +40,9 @@ namespace Business.Concrete
             return _blogTagService.GetByBlogId(id);
         }
 
-        public List<BlogDetail> GetCategories()
+        public List<BlogDetail> GetBlogDetail(int id)
         {
-            throw new NotImplementedException();
+            return _blogDal.getBlogDetail(b=>b.BlogId==id);
         }
 
         public void Update(Blog blog)

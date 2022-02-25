@@ -31,6 +31,11 @@ namespace Business.Concrete
             return _tagDal.GetAll();
         }
 
+        public Tag GetById(int id)
+        {
+            return _tagDal.Get(t=>t.Id==id);
+        }
+
         public void Update(Tag tag)
         {
             _tagDal.Uptade(tag);
