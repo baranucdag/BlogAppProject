@@ -1,4 +1,5 @@
 ﻿using Entities.Concrete;
+using Entities.Dto;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,10 +11,11 @@ namespace Business.Abstact
     public interface IBlogService
     {
         List<Blog> GetAll();
-        Blog Get();
-        void Add(Blog blog);    
+        List<BlogDetail> GetCategories();
+        List<BlogTag> GetBlogTags(int id);
+        void Add(Blog blog);
         void Update(Blog blog);
         void Delete(Blog blog);
-        
+
     }
 }

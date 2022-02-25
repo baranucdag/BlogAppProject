@@ -17,9 +17,16 @@ namespace ConsoleUI
             //    Console.WriteLine(result.CreatedTime);
             //}
 
-            CategoryService categoryService = new CategoryService(new EFCategoryDal());
-            var result = categoryService.GetById(1);
-            Console.WriteLine(result.GetType());
+            //CategoryService categoryService = new CategoryService(new EFCategoryDal());
+            //var result = categoryService.GetById(1);
+            //Console.WriteLine(result.GetType());
+
+            BlogTagService blogTagService = new BlogTagService(new EFBlogTagDal());
+            var result =blogTagService.GetAll();
+            foreach (var tag in result)
+            {
+                Console.WriteLine(tag.TagId);
+            }
         }
     }
 }

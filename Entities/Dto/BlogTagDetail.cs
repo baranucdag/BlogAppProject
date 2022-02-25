@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace Entities.Dto
 {
-    public class BlogTagDetail : IDto
+    public class BlogDetail : IDto
     {
         public int BlogId { get; set; }
-        public int TagId { get; set; }
         public string BlogTitle { get; set; }
-        public string TagName { get; set; }
+        public string  BlogContent { get; set; }
+        public string CategoryName { get; set; }
     }
 }

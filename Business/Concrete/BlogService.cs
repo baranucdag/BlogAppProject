@@ -1,6 +1,7 @@
 ﻿using Business.Abstact;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.Dto;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,9 +13,11 @@ namespace Business.Concrete
     public class BlogService : IBlogService
     {
         private IBlogDal _blogDal;
-        public BlogService(IBlogDal blogDal)
+        private IBlogTagService _blogTagService;
+        public BlogService(IBlogDal blogDal, IBlogTagService blogTagService)
         {
-            _blogDal = blogDal; 
+            _blogDal = blogDal;
+            _blogTagService = blogTagService;
         }
 
         public void Add(Blog blog)
@@ -27,14 +30,19 @@ namespace Business.Concrete
             _blogDal.Delete(blog);
         }
 
-        public Blog Get()
-        {
-            throw new NotImplementedException();
-        }
-
         public List<Blog> GetAll()
         {
             return _blogDal.GetAll().ToList();
+        }
+
+        public List<BlogTag> GetBlogTags(int id)
+        {
+            return _blogTagService.GetByBlogId(id);
+        }
+
+        public List<BlogDetail> GetCategories()
+        {
+            throw new NotImplementedException();
         }
 
         public void Update(Blog blog)

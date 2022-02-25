@@ -28,7 +28,7 @@ namespace Business.Concrete
 
         public List<Tag> GetAll()
         {
-            return _tagDal.GetAll().ToList();
+            return _tagDal.GetAll();
         }
 
         public void Update(Tag tag)
