@@ -28,13 +28,13 @@ namespace ConsoleUI
             //    Console.WriteLine(tag.TagId);
             //}
 
-           BlogService blogService = new BlogService(new EFBlogDal(),new BlogTagService(new EFBlogTagDal()));
-           var result =  blogService.GetBlogTags(9);
+           //BlogService blogService = new BlogService(new EFBlogDal(),new BlogTagService(new EFBlogTagDal()));
+           //var result =  blogService.GetBlogTags(9);
 
-            foreach (var item in result)
-            {
-                Console.WriteLine(item.TagId);
-            }
+           // foreach (var item in result)
+           // {
+           //     Console.WriteLine(item.TagId);
+           // }
 
             TagService tagService = new TagService(new EFTagDal());
             var result1 = tagService.GetById(3);

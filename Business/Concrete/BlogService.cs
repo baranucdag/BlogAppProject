@@ -1,4 +1,6 @@
 ﻿using Business.Abstact;
+using Business.Constans;
+using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.Dto;
@@ -20,34 +22,37 @@ namespace Business.Concrete
             _blogTagService = blogTagService;
         }
 
-        public void Add(Blog blog)
+        public IResult Add(Blog blog)
         {
             _blogDal.Add(blog);
+            return new SuccessResult(Messages.BlogAdded);
         }
 
-        public void Delete(Blog blog)
+        public IResult Delete(Blog blog)
         {
             _blogDal.Delete(blog);
+            return new SuccessResult(Messages.BlogDeleted);
         }
 
-        public List<Blog> GetAll()
+        public IDataResult<List<Blog>> GetAll()
         {
-            return _blogDal.GetAll().ToList();
+            return new SuccessDataResult<List<Blog>>(_blogDal.GetAll().ToList(),Messages.DataListed);
         }
 
-        public List<BlogTag> GetBlogTags(int id)
+        public IDataResult<List<BlogTag>> GetBlogTags(int id)
         {
-            return _blogTagService.GetByBlogId(id);
+            return new SuccessDataResult<List<BlogTag>>(_blogTagService.GetByBlogId(id).ToList(),Messages.DataListed);
         }
 
-        public List<BlogDetail> GetBlogDetail(int id)
+        public IDataResult<List<BlogDetail>> GetBlogDetail(int id)
         {
-            return _blogDal.getBlogDetail(b=>b.BlogId==id);
+            return new SuccessDataResult<List<BlogDetail>>(_blogDal.getBlogDetail(b=>b.BlogId==id).ToList(),Messages.DataListed);
         }
 
-        public void Update(Blog blog)
+        public IResult Update(Blog blog)
         {
             _blogDal.Uptade(blog);
+            return new SuccessResult(Messages.BlogUpdated);
         }
     }
 }

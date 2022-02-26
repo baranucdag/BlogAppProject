@@ -1,4 +1,5 @@
-﻿using Entities.Concrete;
+﻿using Core.Utilities.Results;
+using Entities.Concrete;
 using Entities.Dto;
 using System;
 using System.Collections.Generic;
@@ -10,11 +11,11 @@ namespace Business.Abstact
 {
     public interface IBlogService
     {
-        List<Blog> GetAll();
-        List<BlogDetail> GetBlogDetail(int id);
-        List<BlogTag> GetBlogTags(int id);
-        void Add(Blog blog);
-        void Update(Blog blog);
-        void Delete(Blog blog);
+        IDataResult<List<Blog>> GetAll();
+        IDataResult<List<BlogDetail>> GetBlogDetail(int id);
+         IDataResult<List<BlogTag>> GetBlogTags(int id);
+        IResult Add(Blog blog);
+        IResult Update(Blog blog);
+        IResult Delete(Blog blog);
     }
 }
