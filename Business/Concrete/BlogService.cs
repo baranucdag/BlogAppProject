@@ -1,11 +1,15 @@
 ﻿using Business.Abstact;
 using Business.Constans;
+using Business.ValidationRules.FluentValidation;
+using Core.CrossCuttingConcerns.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.Dto;
+using FluentValidation;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,6 +28,7 @@ namespace Business.Concrete
 
         public IResult Add(Blog blog)
         {
+            ValidationTool.Validate(new BlogValidator(),blog);
             _blogDal.Add(blog);
             return new SuccessResult(Messages.BlogAdded);
         }
