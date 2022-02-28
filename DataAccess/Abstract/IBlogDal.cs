@@ -3,15 +3,12 @@ using Entities.Concrete;
 using Entities.Dto;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DataAccess.Abstract
 {
     public interface IBlogDal : IEntityRepository<Blog>
     {
-        List<BlogDetail> getBlogDetail(Expression<Func<BlogDetail, bool>> filter = null);
+        List<BlogDetailDto> getBlogDetail(Expression<Func<BlogDetailDto, bool>> filter = null);
     }
 }

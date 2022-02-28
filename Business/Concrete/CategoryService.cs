@@ -1,11 +1,8 @@
 ﻿using Business.Abstact;
 using DataAccess.Abstract;
 using Entities.Concrete;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Business.Concrete
 {
@@ -24,7 +21,7 @@ namespace Business.Concrete
 
         public void Delete(Category category)
         {
-           _categoryDal.Delete(category);
+            _categoryDal.Delete(category);
         }
 
         public List<Category> GetAll()
@@ -34,7 +31,7 @@ namespace Business.Concrete
 
         public Category GetById(int id)
         {
-            return _categoryDal.Get(c=>c.Id==id);
+            return _categoryDal.Get(c => c.Id == id);
         }
 
         public void Update(Category category)

@@ -4,7 +4,7 @@ using Entities.Concrete;
 
 namespace DataAccess.Concrete.EntityFramework
 {
-    public class EFTagDal : EFEntityRepositoryBase<Tag,DatabaseContext>,ITagDal
+    public class EFCommentDal : EFEntityRepositoryBase<Comment,DatabaseContext>,ICommentDal
     {
     }
 }

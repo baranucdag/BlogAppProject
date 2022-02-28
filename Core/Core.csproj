@@ -10,7 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Utilities\Helpers\" />
+    <Folder Include="Helpers\" />
   </ItemGroup>
 
 </Project>

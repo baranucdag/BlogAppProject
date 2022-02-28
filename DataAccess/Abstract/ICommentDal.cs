@@ -3,7 +3,7 @@ using Entities.Concrete;
 
 namespace DataAccess.Abstract
 {
-    public interface ITagDal : IEntityRepository<Tag>
+    public interface ICommentDal : IEntityRepository<Comment>
     {
     }
 }

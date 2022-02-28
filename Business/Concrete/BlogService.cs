@@ -6,13 +6,8 @@ using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.Dto;
-using FluentValidation;
-using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Business.Concrete
 {
@@ -28,7 +23,7 @@ namespace Business.Concrete
 
         public IResult Add(Blog blog)
         {
-            ValidationTool.Validate(new BlogValidator(),blog);
+            ValidationTool.Validate(new BlogValidator(), blog);
             _blogDal.Add(blog);
             return new SuccessResult(Messages.BlogAdded);
         }
@@ -41,17 +36,17 @@ namespace Business.Concrete
 
         public IDataResult<List<Blog>> GetAll()
         {
-            return new SuccessDataResult<List<Blog>>(_blogDal.GetAll().ToList(),Messages.DataListed);
+            return new SuccessDataResult<List<Blog>>(_blogDal.GetAll().ToList(), Messages.DataListed);
         }
 
         public IDataResult<List<BlogTag>> GetBlogTags(int id)
         {
-            return new SuccessDataResult<List<BlogTag>>(_blogTagService.GetByBlogId(id).ToList(),Messages.DataListed);
+            return new SuccessDataResult<List<BlogTag>>(_blogTagService.GetByBlogId(id).ToList(), Messages.DataListed);
         }
 
-        public IDataResult<List<BlogDetail>> GetBlogDetail(int id)
+        public IDataResult<List<BlogDetailDto>> GetBlogDetail(int id)
         {
-            return new SuccessDataResult<List<BlogDetail>>(_blogDal.getBlogDetail(b=>b.BlogId==id).ToList(),Messages.DataListed);
+            return new SuccessDataResult<List<BlogDetailDto>>(_blogDal.getBlogDetail(b => b.BlogId == id).ToList(), Messages.DataListed);
         }
 
         public IResult Update(Blog blog)

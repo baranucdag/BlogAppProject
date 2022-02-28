@@ -6,26 +6,24 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DataAccess.Concrete.EntityFramework
 {
     public class EFBlogDal : EFEntityRepositoryBase<Blog,DatabaseContext> ,IBlogDal
     {
-        public List<BlogDetail> getBlogDetail(Expression<Func<BlogDetail, bool>> filter = null)
+        public List<BlogDetailDto> getBlogDetail(Expression<Func<BlogDetailDto, bool>> filter = null)
         {
             using (var context = new DatabaseContext())
             {
-                var result = from b in context.Blogs
-                             join c in context.Categories
-                             on b.CategoryId equals c.Id
-                             select new BlogDetail()
+                var result = from t1 in context.Blogs
+                             join t2 in context.Categories
+                             on t1.CategoryId equals t2.Id
+                             select new BlogDetailDto()
                              {
-                                 BlogId = b.Id,
-                                 BlogContent = b.BlogContent,
-                                 BlogTitle = b.BlogTitle,
-                                 CategoryName = c.CategoryName
+                                 BlogId = t1.Id,
+                                 BlogContent = t1.BlogContent,
+                                 BlogTitle = t1.BlogTitle,
+                                 CategoryName = t2.CategoryName
                                  
                              };
                 return filter == null ? result.ToList() : result.Where(filter).ToList();

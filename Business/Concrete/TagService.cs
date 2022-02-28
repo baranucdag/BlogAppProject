@@ -1,11 +1,7 @@
 ﻿using Business.Abstact;
 using DataAccess.Abstract;
 using Entities.Concrete;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Business.Concrete
 {
@@ -33,7 +29,7 @@ namespace Business.Concrete
 
         public Tag GetById(int id)
         {
-            return _tagDal.Get(t=>t.Id==id);
+            return _tagDal.Get(t => t.Id == id);
         }
 
         public void Update(Tag tag)

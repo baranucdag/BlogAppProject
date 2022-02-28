@@ -1,9 +1,5 @@
 ﻿using Core.Entities.Abstract;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Entities.Concrete
 {
@@ -13,6 +9,6 @@ namespace Entities.Concrete
         public int BlogId { get; set; }
         public int UserId { get; set; }
         public string CommentContent { get; set; }
-        public DateTime CreatedTime { get; set; } 
+        public DateTime CreatedTime { get; set; }
     }
 }
