@@ -9,11 +9,11 @@ using System.Linq.Expressions;
 
 namespace DataAccess.Concrete.EntityFramework
 {
-    public class EFBlogDal : EFEntityRepositoryBase<Blog,DatabaseContext> ,IBlogDal
+    public class EFBlogDal : EFEntityRepositoryBase<Blog,DataContext> ,IBlogDal
     {
         public List<BlogDetailDto> getBlogDetail(Expression<Func<BlogDetailDto, bool>> filter = null)
         {
-            using (var context = new DatabaseContext())
+            using (var context = new DataContext())
             {
                 var result = from t1 in context.Blogs
                              join t2 in context.Categories

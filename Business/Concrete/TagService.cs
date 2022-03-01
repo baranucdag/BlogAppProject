@@ -7,34 +7,34 @@ namespace Business.Concrete
 {
     public class TagService : ITagService
     {
-        private ITagDal _tagDal;
+        private ITagDal tagDal;
         public TagService(ITagDal tagDal)
         {
-            _tagDal = tagDal;
+            this.tagDal = tagDal;
         }
         public void Add(Tag tag)
         {
-            _tagDal.Add(tag);
+            tagDal.Add(tag);
         }
 
         public void Delete(Tag tag)
         {
-            _tagDal.Delete(tag);
+            tagDal.Delete(tag);
         }
 
         public List<Tag> GetAll()
         {
-            return _tagDal.GetAll();
+            return tagDal.GetAll();
         }
 
         public Tag GetById(int id)
         {
-            return _tagDal.Get(t => t.Id == id);
+            return tagDal.Get(t => t.Id == id);
         }
 
         public void Update(Tag tag)
         {
-            _tagDal.Uptade(tag);
+            tagDal.Uptade(tag);
         }
     }
 }

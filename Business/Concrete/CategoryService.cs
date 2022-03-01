@@ -8,35 +8,35 @@ namespace Business.Concrete
 {
     public class CategoryService : ICategoryService
     {
-        private ICategoryDal _categoryDal;
+        private ICategoryDal categoryDal;
         public CategoryService(ICategoryDal categoryDal)
         {
-            _categoryDal = categoryDal;
+            this.categoryDal = categoryDal;
         }
 
         public void Add(Category category)
         {
-            _categoryDal.Add(category);
+            categoryDal.Add(category);
         }
 
         public void Delete(Category category)
         {
-            _categoryDal.Delete(category);
+            categoryDal.Delete(category);
         }
 
         public List<Category> GetAll()
         {
-            return _categoryDal.GetAll().ToList();
+            return categoryDal.GetAll().ToList();
         }
 
         public Category GetById(int id)
         {
-            return _categoryDal.Get(c => c.Id == id);
+            return categoryDal.Get(c => c.Id == id);
         }
 
         public void Update(Category category)
         {
-            _categoryDal.Uptade(category);
+            categoryDal.Uptade(category);
         }
     }
 }

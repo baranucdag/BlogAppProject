@@ -9,36 +9,36 @@ namespace Business.Concrete
 {
     public class CommentService : ICommentService
     {
-        ICommentDal _commentDal;
+        ICommentDal commentDal;
         public CommentService(ICommentDal commentDal)
         {
-            _commentDal = commentDal;
+            this.commentDal = commentDal;
         }
         public IResult Add(Comment comment)
         {
-            _commentDal.Add(comment);
+            commentDal.Add(comment);
             return new SuccessResult();
         }
 
         public IResult Delete(Comment comment)
         {
-            _commentDal.Delete(comment);
+            commentDal.Delete(comment);
             return new SuccessResult();
         }
 
         public IDataResult<List<Comment>> GetAll()
         {
-            return new SuccessDataResult<List<Comment>>(_commentDal.GetAll(), Messages.DataListed);
+            return new SuccessDataResult<List<Comment>>(commentDal.GetAll(), Messages.DataListed);
         }
 
         public IDataResult<Comment> GetByBlogId(int id)
         {
-            return new SuccessDataResult<Comment>(_commentDal.Get(c => c.BlogId == id));
+            return new SuccessDataResult<Comment>(commentDal.Get(c => c.BlogId == id));
         }
 
         public IResult Update(Comment comment)
         {
-            _commentDal.Uptade(comment);
+            commentDal.Uptade(comment);
             return new SuccessResult();
         }
     }

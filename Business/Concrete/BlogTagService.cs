@@ -7,41 +7,41 @@ namespace Business.Concrete
 {
     public class BlogTagService : IBlogTagService
     {
-        private IBlogTagDal _blogTagDal;
+        private IBlogTagDal blogTagDal;
 
         public BlogTagService(IBlogTagDal blogTagDal)
         {
-            _blogTagDal = blogTagDal;
+            this.blogTagDal = blogTagDal;
         }
         public void Add(BlogTag blogTag)
         {
-            _blogTagDal.Add(blogTag);
+            blogTagDal.Add(blogTag);
         }
 
         public void Delete(BlogTag blogTag)
         {
-            _blogTagDal.Delete(blogTag);
+            blogTagDal.Delete(blogTag);
         }
 
         public List<BlogTag> GetAll()
         {
-            return _blogTagDal.GetAll();
+            return blogTagDal.GetAll();
         }
 
 
         public List<BlogTag> GetByBlogId(int id)
         {
-            return _blogTagDal.GetAll(b => b.BlogId == id);
+            return blogTagDal.GetAll(b => b.BlogId == id);
         }
 
         public BlogTag GetByTagId(int id)
         {
-            return _blogTagDal.Get(b => b.TagId == id);
+            return blogTagDal.Get(b => b.TagId == id);
         }
 
         public void Update(BlogTag blogTag)
         {
-            _blogTagDal.Uptade(blogTag);
+            blogTagDal.Uptade(blogTag);
         }
     }
 }

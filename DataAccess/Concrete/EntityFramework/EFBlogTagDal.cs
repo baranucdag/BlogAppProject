@@ -4,7 +4,7 @@ using Entities.Concrete;
 
 namespace DataAccess.Concrete.EntityFramework
 {
-    public class EFBlogTagDal : EFEntityRepositoryBase<BlogTag,DatabaseContext> ,IBlogTagDal
+    public class EFBlogTagDal : EFEntityRepositoryBase<BlogTag,DataContext> ,IBlogTagDal
     {
     }
 }
