@@ -1,4 +1,4 @@
-﻿using Core.Utilities.Results;
+﻿using Core.Results;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.IO;
@@ -30,8 +30,6 @@ namespace Core.Helpers
             CheckDirectoryExists(_currentDirectory + _folderName);
             CreateImageFile(_currentDirectory + _folderName + randomName + type, file);
             return new SuccessResult((_folderName + randomName + type).Replace("\\", "/"));
-
-
 
         }
 

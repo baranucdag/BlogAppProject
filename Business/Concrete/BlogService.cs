@@ -2,7 +2,7 @@
 using Business.Constans;
 using Business.ValidationRules.FluentValidation;
 using Core.CrossCuttingConcerns.Validation;
-using Core.Utilities.Results;
+using Core.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.Dto;
@@ -41,7 +41,7 @@ namespace Business.Concrete
 
         public IDataResult<List<BlogTag>> GetBlogTags(int id)
         {
-            return new SuccessDataResult<List<BlogTag>>(blogTagService.GetByBlogId(id).ToList(), Messages.DataListed);
+            return new SuccessDataResult<List<BlogTag>>(blogTagService.GetByBlogId(id).Data, Messages.DataListed);
         }
 
         public IDataResult<List<BlogDetailDto>> GetBlogDetail(int id)

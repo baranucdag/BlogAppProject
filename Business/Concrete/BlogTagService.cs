@@ -1,4 +1,6 @@
 ﻿using Business.Abstact;
+using Business.Constans;
+using Core.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using System.Collections.Generic;
@@ -13,35 +15,38 @@ namespace Business.Concrete
         {
             this.blogTagDal = blogTagDal;
         }
-        public void Add(BlogTag blogTag)
+        public IResult Add(BlogTag blogTag)
         {
             blogTagDal.Add(blogTag);
+            return new SuccessResult();
         }
 
-        public void Delete(BlogTag blogTag)
+        public IResult Delete(BlogTag blogTag)
         {
             blogTagDal.Delete(blogTag);
+            return new SuccessResult();
         }
 
-        public List<BlogTag> GetAll()
+        public IDataResult<List<BlogTag>> GetAll()
         {
-            return blogTagDal.GetAll();
+            return new SuccessDataResult<List<BlogTag>>(blogTagDal.GetAll(),Messages.DataListed);
         }
 
 
-        public List<BlogTag> GetByBlogId(int id)
+        public IDataResult<List<BlogTag>> GetByBlogId(int id)
         {
-            return blogTagDal.GetAll(b => b.BlogId == id);
+            return new SuccessDataResult<List<BlogTag>>(blogTagDal.GetAll(b => b.BlogId == id),Messages.DataListed);
         }
 
-        public BlogTag GetByTagId(int id)
+        public IDataResult<BlogTag> GetByTagId(int id)
         {
-            return blogTagDal.Get(b => b.TagId == id);
+            return new SuccessDataResult<BlogTag>(blogTagDal.Get(b => b.TagId == id),Messages.DataListed);
         }
 
-        public void Update(BlogTag blogTag)
+        public IResult Update(BlogTag blogTag)
         {
             blogTagDal.Uptade(blogTag);
+            return new SuccessResult();
         }
     }
 }

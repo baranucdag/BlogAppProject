@@ -1,4 +1,4 @@
-﻿using Core.Utilities.Results;
+﻿using Core.Results;
 using Entities.Concrete;
 using System.Collections.Generic;
 

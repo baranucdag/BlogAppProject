@@ -1,14 +1,15 @@
-﻿using Entities.Concrete;
+﻿using Core.Results;
+using Entities.Concrete;
 using System.Collections.Generic;
 
 namespace Business.Abstact
 {
     public interface ITagService
     {
-        List<Tag> GetAll();
-        Tag GetById(int id);
-        void Add(Tag tag);
-        void Update(Tag tag);
-        void Delete(Tag tag);
+        IDataResult<List<Tag>> GetAll();
+        IDataResult<Tag> GetById(int id);
+        IResult Add(Tag tag);
+        IResult Update(Tag tag);
+        IResult Delete(Tag tag);
     }
 }

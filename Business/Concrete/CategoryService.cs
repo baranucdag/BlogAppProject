@@ -1,4 +1,6 @@
 ﻿using Business.Abstact;
+using Business.Constans;
+using Core.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using System.Collections.Generic;
@@ -14,29 +16,32 @@ namespace Business.Concrete
             this.categoryDal = categoryDal;
         }
 
-        public void Add(Category category)
+        public IResult Add(Category category)
         {
             categoryDal.Add(category);
+            return new SuccessResult();
         }
 
-        public void Delete(Category category)
+        public IResult Delete(Category category)
         {
             categoryDal.Delete(category);
+            return new SuccessResult();
         }
 
-        public List<Category> GetAll()
+        public IDataResult<List<Category>> GetAll()
         {
-            return categoryDal.GetAll().ToList();
+            return new SuccessDataResult<List<Category>>(categoryDal.GetAll().ToList(),Messages.DataListed);
         }
 
-        public Category GetById(int id)
+        public IDataResult<Category> GetById(int id)
         {
-            return categoryDal.Get(c => c.Id == id);
+            return new SuccessDataResult<Category>(categoryDal.Get(c => c.Id == id),Messages.DataListed);
         }
 
-        public void Update(Category category)
+        public IResult Update(Category category)
         {
             categoryDal.Uptade(category);
+            return new SuccessResult();
         }
     }
 }

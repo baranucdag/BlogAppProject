@@ -21,6 +21,11 @@ namespace Business.DependencyResolvers.Autofac
 
             builder.RegisterType<TagService>().As<ITagService>().SingleInstance();
             builder.RegisterType<EFTagDal>().As<ITagDal>().SingleInstance();
+
+            builder.RegisterType<ImageService>().As<IImageService>().SingleInstance();
+            builder.RegisterType<EFImageDal>().As<IImageDal>().SingleInstance();
+
+
         }
     }
 }

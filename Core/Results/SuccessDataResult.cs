@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Core.Utilities.Results
+namespace Core.Results
 {
     public class SuccessDataResult<T> : DataResult<T>
     {

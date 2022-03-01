@@ -1,6 +1,6 @@
 ﻿using Business.Abstact;
 using Core.Helpers;
-using Core.Utilities.Results;
+using Core.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Microsoft.AspNetCore.Http;
@@ -10,22 +10,16 @@ using System.Linq;
 
 namespace Business.Concrete
 {
-    public class CarImageManager : IImageService
+    public class ImageService : IImageService
     {
         IImageDal imageDal;
-        public CarImageManager(IImageDal imageDal)
+        public ImageService(IImageDal imageDal)
         {
             this.imageDal = imageDal;
         }
 
         public IResult Add(IFormFile formFile, Image ımage)
         {
-            var ımageCount = imageDal.GetAll().Count;
-            if (ımageCount >= 1)
-            {
-                return new ErrorResult("A blog must have only 1 image");
-            }
-
             var imageResult = FileHelper.Upload(formFile);
             if (!imageResult.Success)
             {
@@ -75,23 +69,6 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Image>>(imageDal.GetAll());
         }
 
-        public IDataResult<List<Image>> GetImagesByBlogId(int id)
-        {
-            return new SuccessDataResult<List<Image>>(CheckIfBlogImageNull(id).Data);
-        }
-
-
-        //business rules
-        private IResult CheckImageLimitExceeded(int blogId)
-        {
-            var carImagecount = imageDal.GetAll(p => p.BlogId == blogId).Count;
-            if (carImagecount >= 1)
-            {
-                return new ErrorResult("Blog image limit exceeded");
-            }
-
-            return new SuccessResult();
-        }
 
         private IDataResult<List<Image>> CheckIfBlogImageNull(int id)
         {

@@ -40,9 +40,9 @@ namespace ConsoleUI
             //var result1 = tagService.GetById(3);
             //Console.WriteLine(result1.TagName);
 
-            BlogTagService blogTagService = new BlogTagService(new EFBlogTagDal());
-            var result = blogTagService.GetByTagId(1);
-            Console.WriteLine(result.BlogId);
+            //BlogTagService blogTagService = new BlogTagService(new EFBlogTagDal());
+            //var result = blogTagService.GetByTagId(1);
+            //Console.WriteLine(result.BlogId);
     
            
         }
