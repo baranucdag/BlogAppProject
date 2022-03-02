@@ -1,23 +1,25 @@
 ﻿using Business.Abstact;
 using Entities.Concrete;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TagsController : ControllerBase
+    public class CommentsController : ControllerBase
     {
-        private ITagService tagService;
-        public TagsController(ITagService tagService)
+        private ICommentService commentService;
+
+        public CommentsController(ICommentService commentService)
         {
-            this.tagService = tagService;  
+            this.commentService = commentService;
         }
 
         [HttpGet("getall")]
         public IActionResult GetAll()
         {
-            var result = tagService.GetAll();
+            var result = commentService.GetAll();
             if (result.Success)
             {
                 return Ok(result);
@@ -25,10 +27,21 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
-        [HttpGet("getbytagid")]
-        public IActionResult GetByTagId(int tagId)
+        [HttpGet("getbyblogid")]
+        public IActionResult GetByBlogId(int blogId)
         {
-            var result = tagService.GetById(tagId);
+            var result = commentService.GetByBlogId(blogId);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
+        [HttpGet("getbycommentid")]
+        public IActionResult GetByCommentId(int commentId)
+        {
+            var result = commentService.GetByCommentId(commentId);
             if (result.Success)
             {
                 return Ok(result);
@@ -37,9 +50,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("add")]
-        public IActionResult Add(Tag tag)
+        public IActionResult Add(Comment comment)
         {
-            var result = tagService.Add(tag);
+            var result = commentService.Add(comment);
             if (result.Success)
             {
                 return Ok(result);
@@ -48,9 +61,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("delete")]
-        public IActionResult Delete(Tag tag)
+        public IActionResult Delete(Comment comment)
         {
-            var result = tagService.Delete(tag);
+            var result = commentService.Delete(comment);
             if (result.Success)
             {
                 return Ok(result);
@@ -59,9 +72,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("update")]
-        public IActionResult Update(Tag tag)
+        public IActionResult Update(Comment comment)
         {
-            var result = tagService.Update(tag);
+            var result = commentService.Update(comment);
             if (result.Success)
             {
                 return Ok(result);

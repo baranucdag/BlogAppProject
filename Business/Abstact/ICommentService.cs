@@ -8,6 +8,7 @@ namespace Business.Abstact
     {
         IDataResult<List<Comment>> GetAll();
         IDataResult<Comment> GetByBlogId(int id);
+        IDataResult<Comment> GetByCommentId(int id);
         IResult Add(Comment comment);
         IResult Update(Comment comment);
         IResult Delete(Comment comment);

@@ -1,4 +1,5 @@
 ﻿using Business.Abstact;
+using Business.Constans;
 using Core.Helpers;
 using Core.Results;
 using DataAccess.Abstract;
@@ -12,98 +13,85 @@ namespace Business.Concrete
 {
     public class ImageService : IImageService
     {
-        IImageDal imageDal;
-        public ImageService(IImageDal imageDal)
+        private IImageDal ımageDal;
+        private IFileHelper fileHelper;
+
+        public ImageService(IImageDal ımageDal, IFileHelper fileHelper)
         {
-            this.imageDal = imageDal;
+            this.ımageDal = ımageDal;
+            this.fileHelper = fileHelper;
         }
 
-        public IResult Add(IFormFile formFile, Image ımage)
+        // adding an ımage 
+        public IResult Add(IFormFile file, Image ımage)
         {
-            var imageResult = FileHelper.Upload(formFile);
-            if (!imageResult.Success)
-            {
-                return new ErrorResult(imageResult.Message);
-            }
-            ımage.ImagePath = imageResult.Message;
-            imageDal.Add(ımage);
-            return new SuccessResult("Blog image added.");
+
+            ımage.ImagePath = fileHelper.Upload(file, PathConstants.ImagesPath);
+            ımage.Date = DateTime.Now;
+            ımageDal.Add(ımage);
+            return new SuccessResult("Image added successfully");
         }
 
+        // delete an ımage
         public IResult Delete(Image ımage)
         {
-            var image = imageDal.Get(c => c.BlogId == ımage.BlogId);
-            if (image == null)
-            {
-                return new ErrorResult("Image not found");
-            }
-
-            FileHelper.Delete(image.ImagePath);
-            imageDal.Delete(ımage);
-            return new SuccessResult("Image deleted successfully");
-        }
-
-        public IResult Update(IFormFile file, Image ımage)
-        {
-            var isImage = imageDal.Get(c => c.BlogId == ımage.BlogId);
-            if (isImage == null)
-            {
-                return new ErrorResult("Image not found");
-            }
-
-            var updatedFile = FileHelper.Update(file, isImage.ImagePath);
-            if (!updatedFile.Success)
-            {
-                return new ErrorResult(updatedFile.Message);
-            }
-            ımage.ImagePath = updatedFile.Message;
-            imageDal.Uptade(ımage);
-            return new SuccessResult("Blog image updated");
-        }
-        public IDataResult<Image> Get(int id)
-        {
-            return new SuccessDataResult<Image>(imageDal.Get(p => p.BlogId == id));
-        }
-        public IDataResult<List<Image>> GetAll()
-        {
-            return new SuccessDataResult<List<Image>>(imageDal.GetAll());
-        }
-
-
-        private IDataResult<List<Image>> CheckIfBlogImageNull(int id)
-        {
-            try
-            {
-                string path = @"\images\logo.jpg";
-                var result = imageDal.GetAll(c => c.BlogId == id).Any();
-                if (!result)
-                {
-                    List<Image> carimage = new List<Image>();
-                    carimage.Add(new Image { BlogId = id, ImagePath = path, Date = DateTime.Now });
-                    return new SuccessDataResult<List<Image>>(carimage);
-                }
-            }
-            catch (Exception exception)
-            {
-
-                return new ErrorDataResult<List<Image>>(exception.Message);
-            }
-
-            return new SuccessDataResult<List<Image>>(imageDal.GetAll(p => p.BlogId == id).ToList());
-        }
-        private IResult BlogImageDelete(Image ımage)
-        {
-            try
-            {
-                FileHelper.Delete(ımage.ImagePath);
-            }
-            catch (Exception exception)
-            {
-
-                return new ErrorResult(exception.Message);
-            }
-
+            fileHelper.Delete(PathConstants.ImagesPath + ımage.ImagePath);
+            ımageDal.Delete(ımage);
             return new SuccessResult();
         }
+
+        // update an ımage
+        public IResult Update(IFormFile file, Image ımage)
+        {
+            ımage.ImagePath = fileHelper.Update(file, PathConstants.ImagesPath + ımage.ImagePath, PathConstants.ImagesPath);
+            ımageDal.Uptade(ımage);
+            return new SuccessResult();
+        }
+
+        // returns all BlogImages
+        public IDataResult<List<Image>> GetAll()
+        {
+            return new SuccessDataResult<List<Image>>(ımageDal.GetAll());
+        }
+
+        // returns an ımage by blogId
+        public IDataResult<List<Image>> GetByBlogId(int blogId)
+        {
+            var result = CheckBlogImage(blogId);
+            if (result.Success)
+            {
+                return new ErrorDataResult<List<Image>>(GetDefaultImage(blogId).Data);
+            }
+
+            return new SuccessDataResult<List<Image>>(ımageDal.GetAll(x => x.BlogId == blogId));
+        }
+
+        //returns an ımage by ımageId
+        public IDataResult<Image> GetByImageId(int imageId)
+        {
+            return new SuccessDataResult<Image>(ımageDal.Get(x => x.Id == imageId));
+        }
+
+
+        // checks if any ımage exist by blogID
+        private IResult CheckBlogImage(int blogId)
+        {
+            var result = ımageDal.GetAll(x => x.BlogId == blogId).Count;
+            if (result > 0)
+            {
+                return new SuccessResult();
+            }
+            return new ErrorResult();
+        }
+
+        // returns default ımage by blogId
+        private IDataResult<List<Image>> GetDefaultImage(int blogId)
+        {
+
+            List<Image> ımage = new List<Image>();
+            ımage.Add(new Image { BlogId = blogId, Date = DateTime.Now, ImagePath = "DefaultImage.jpg" });
+            return new SuccessDataResult<List<Image>>(ımage);
+        }
+
     }
 }

@@ -36,6 +36,11 @@ namespace Business.Concrete
             return new SuccessDataResult<Comment>(commentDal.Get(c => c.BlogId == id));
         }
 
+        public IDataResult<Comment> GetByCommentId(int id)
+        {
+            return new SuccessDataResult<Comment>(commentDal.Get(c => c.Id == id));
+        }
+
         public IResult Update(Comment comment)
         {
             commentDal.Uptade(comment);

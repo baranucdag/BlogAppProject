@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using Business.Abstact;
 using Business.Concrete;
+using Core.Helpers;
 using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramework;
 
@@ -25,6 +26,10 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<ImageService>().As<IImageService>().SingleInstance();
             builder.RegisterType<EFImageDal>().As<IImageDal>().SingleInstance();
 
+            builder.RegisterType<CommentService>().As<ICommentService>().SingleInstance();
+            builder.RegisterType<EFCommentDal>().As<ICommentDal>().SingleInstance();
+
+            builder.RegisterType<FileHelperManager>().As<IFileHelper>().SingleInstance();
 
         }
     }

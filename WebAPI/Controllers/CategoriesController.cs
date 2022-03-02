@@ -1,23 +1,24 @@
 ﻿using Business.Abstact;
 using Entities.Concrete;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TagsController : ControllerBase
+    public class CategoriesController : ControllerBase
     {
-        private ITagService tagService;
-        public TagsController(ITagService tagService)
+        private ICategoryService categoryService;
+        public CategoriesController(ICategoryService categoryService)
         {
-            this.tagService = tagService;  
+            this.categoryService = categoryService;
         }
 
         [HttpGet("getall")]
         public IActionResult GetAll()
         {
-            var result = tagService.GetAll();
+            var result = categoryService.GetAll();
             if (result.Success)
             {
                 return Ok(result);
@@ -25,10 +26,10 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
-        [HttpGet("getbytagid")]
-        public IActionResult GetByTagId(int tagId)
+        [HttpGet("getbycategoryid")]
+        public IActionResult GetByCategoryId(int categoryId)
         {
-            var result = tagService.GetById(tagId);
+            var result = categoryService.GetById(categoryId);
             if (result.Success)
             {
                 return Ok(result);
@@ -37,9 +38,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("add")]
-        public IActionResult Add(Tag tag)
+        public IActionResult Add(Category category)
         {
-            var result = tagService.Add(tag);
+            var result = categoryService.Add(category);
             if (result.Success)
             {
                 return Ok(result);
@@ -48,9 +49,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("delete")]
-        public IActionResult Delete(Tag tag)
+        public IActionResult Delete(Category category)
         {
-            var result = tagService.Delete(tag);
+            var result = categoryService.Delete(category);
             if (result.Success)
             {
                 return Ok(result);
@@ -59,9 +60,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("update")]
-        public IActionResult Update(Tag tag)
+        public IActionResult Update(Category category)
         {
-            var result = tagService.Update(tag);
+            var result = categoryService.Update(category);
             if (result.Success)
             {
                 return Ok(result);
@@ -70,4 +71,5 @@ namespace WebAPI.Controllers
         }
 
     }
+}
 }
