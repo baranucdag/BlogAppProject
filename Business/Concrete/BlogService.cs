@@ -25,6 +25,7 @@ namespace Business.Concrete
         {
             ValidationTool.Validate(new BlogValidator(), blog);
             blogDal.Add(blog);
+            blog.CreatedTime = System.DateTime.Now;
             return new SuccessResult(Messages.BlogAdded);
         }
 

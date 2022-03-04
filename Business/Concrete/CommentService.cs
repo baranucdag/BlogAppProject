@@ -17,6 +17,7 @@ namespace Business.Concrete
         public IResult Add(Comment comment)
         {
             commentDal.Add(comment);
+            comment.CreatedTime = System.DateTime.Now;
             return new SuccessResult();
         }
 

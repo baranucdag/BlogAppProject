@@ -11,7 +11,7 @@ namespace WebAPI.Controllers
         private ITagService tagService;
         public TagsController(ITagService tagService)
         {
-            this.tagService = tagService;  
+            this.tagService = tagService;
         }
 
         [HttpGet("getall")]

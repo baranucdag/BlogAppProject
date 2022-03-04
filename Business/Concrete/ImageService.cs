@@ -7,7 +7,6 @@ using Entities.Concrete;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Business.Concrete
 {
@@ -73,7 +72,7 @@ namespace Business.Concrete
         }
 
 
-        // checks if any ımage exist by blogID
+        // checks if any ımage exist by blogId
         private IResult CheckBlogImage(int blogId)
         {
             var result = ımageDal.GetAll(x => x.BlogId == blogId).Count;

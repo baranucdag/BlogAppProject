@@ -9,7 +9,6 @@ namespace WebAPI.Controllers
     public class BlogsController : ControllerBase
     {
         private IBlogService blogService;
-
         public BlogsController(IBlogService blogService)
         {
             this.blogService = blogService;
