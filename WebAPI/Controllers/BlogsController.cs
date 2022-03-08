@@ -6,7 +6,7 @@ namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BlogsController : ControllerBase
+    public class BlogsController : BaseController
     {
         private IBlogService blogService;
         public BlogsController(IBlogService blogService)
@@ -14,7 +14,9 @@ namespace WebAPI.Controllers
             this.blogService = blogService;
         }
 
-        [HttpGet("getall")]
+
+
+        [HttpGet("GetAll")]
         public IActionResult GetAll()
         {
             var result = blogService.GetAll();
@@ -25,7 +27,7 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
-        [HttpPost("add")]
+        [HttpPost("Add")]
         public IActionResult Add(Blog blog)
         {
             var result = blogService.Add(blog);
@@ -36,7 +38,7 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
-        [HttpPost("update")]
+        [HttpPost("Update")]
         public IActionResult Update(Blog blog)
         {
             var result = blogService.Update(blog);
@@ -47,7 +49,7 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
-        [HttpPost("delete")]
+        [HttpPost("Delete")]
         public IActionResult Delete(Blog blog)
         {
             var result = blogService.Delete(blog);
@@ -58,7 +60,7 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
-        [HttpGet("getblogdetails")]
+        [HttpGet("GetBlogDetails")]
         public IActionResult GetBlogDetails(int id)
         {
             var result = blogService.GetBlogDetail(id);

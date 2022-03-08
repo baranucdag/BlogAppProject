@@ -1,33 +1,54 @@
-﻿using Core.Helpers.GuidHelper;
+﻿using Core.Results;
 using Microsoft.AspNetCore.Http;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Core.Helpers
 {
     public class FileHelperManager : IFileHelper
     {
+        //todo:upload methodu güncellencek
+
+        // Delete - delete an ımage by ımagePath 
         public void Delete(string filePath)
         {
-            if (File.Exists(filePath))
+            try
             {
-                File.Delete(filePath);
+                if (File.Exists(filePath))
+                {
+                    File.Delete(filePath);
+                }
             }
+            catch (Exception e)
+            {
+
+                throw new Exception(e.Message);
+            }
+           
         }
 
+        // Uptade - update an ımage
         public string Update(IFormFile file, string filePath, string root)
         {
-            if (File.Exists(filePath))
+            try
+            {
+               if (File.Exists(filePath))
             {
                 File.Delete(filePath);
             }
             return Upload(file, root);
+            }
+            catch (Exception e)
+            {
+
+                throw new Exception(e.Message);
+            }
+            
         }
 
+
+        // Upload - Upload an ımage by file and root
         public string Upload(IFormFile file, string root)
         {
             if (file.Length > 0)
@@ -37,15 +58,23 @@ namespace Core.Helpers
                     Directory.CreateDirectory(root);
                 }
                 string extension = Path.GetExtension(file.FileName);
-                string guid = GuidHelperManager.CreateGuid();
+                string guid = Guid.NewGuid().ToString();
                 string filePath = guid + extension;
 
-                using (FileStream fileStream = File.Create(root + filePath))
+                string[] allowExtensions = { ".jpg", ".jpeg", ".png" };
+                if (allowExtensions.FirstOrDefault(x => x.ToUpper() == extension.ToUpper()) != null)
                 {
-                    file.CopyTo(fileStream);
-                    fileStream.Flush();
-                    return filePath;
+
+                    using (FileStream fileStream = File.Create(root + filePath))
+                    {
+
+                        file.CopyTo(fileStream);
+                        fileStream.Flush();
+                        return filePath;
+                    }
+
                 }
+
             }
             return null;
         }

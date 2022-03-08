@@ -12,12 +12,12 @@ namespace Business.Concrete
 {
     public class ImageService : IImageService
     {
-        private IImageDal ımageDal;
+        private IImageDal imageDal;
         private IFileHelper fileHelper;
 
-        public ImageService(IImageDal ımageDal, IFileHelper fileHelper)
+        public ImageService(IImageDal imageDal, IFileHelper fileHelper)
         {
-            this.ımageDal = ımageDal;
+            this.imageDal = imageDal;
             this.fileHelper = fileHelper;
         }
 
@@ -27,7 +27,7 @@ namespace Business.Concrete
 
             ımage.ImagePath = fileHelper.Upload(file, PathConstants.ImagesPath);
             ımage.Date = DateTime.Now;
-            ımageDal.Add(ımage);
+            imageDal.Add(ımage);
             return new SuccessResult("Image added successfully");
         }
 
@@ -35,7 +35,7 @@ namespace Business.Concrete
         public IResult Delete(Image ımage)
         {
             fileHelper.Delete(PathConstants.ImagesPath + ımage.ImagePath);
-            ımageDal.Delete(ımage);
+            imageDal.Delete(ımage);
             return new SuccessResult();
         }
 
@@ -43,14 +43,14 @@ namespace Business.Concrete
         public IResult Update(IFormFile file, Image ımage)
         {
             ımage.ImagePath = fileHelper.Update(file, PathConstants.ImagesPath + ımage.ImagePath, PathConstants.ImagesPath);
-            ımageDal.Uptade(ımage);
+            imageDal.Uptade(ımage);
             return new SuccessResult();
         }
 
         // returns all BlogImages
         public IDataResult<List<Image>> GetAll()
         {
-            return new SuccessDataResult<List<Image>>(ımageDal.GetAll());
+            return new SuccessDataResult<List<Image>>(imageDal.GetAll());
         }
 
         // returns an ımage by blogId
@@ -62,25 +62,22 @@ namespace Business.Concrete
                 return new ErrorDataResult<List<Image>>(GetDefaultImage(blogId).Data);
             }
 
-            return new SuccessDataResult<List<Image>>(ımageDal.GetAll(x => x.BlogId == blogId));
+            return new SuccessDataResult<List<Image>>(imageDal.GetAll(x => x.BlogId == blogId));
         }
 
         //returns an ımage by ımageId
         public IDataResult<Image> GetByImageId(int imageId)
         {
-            return new SuccessDataResult<Image>(ımageDal.Get(x => x.Id == imageId));
+            return new SuccessDataResult<Image>(imageDal.Get(x => x.Id == imageId));
         }
 
 
         // checks if any ımage exist by blogId
         private IResult CheckBlogImage(int blogId)
         {
-            var result = ımageDal.GetAll(x => x.BlogId == blogId).Count;
-            if (result > 0)
-            {
-                return new SuccessResult();
-            }
-            return new ErrorResult();
+            var result = imageDal.GetAll(x => x.BlogId == blogId).Count;
+            return result > 0 ? new SuccessResult() : new ErrorResult();
+           
         }
 
         // returns default ımage by blogId
