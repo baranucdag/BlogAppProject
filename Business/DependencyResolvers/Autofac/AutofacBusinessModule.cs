@@ -1,7 +1,12 @@
 ﻿using Autofac;
+using Autofac.Extras.DynamicProxy;
 using Business.Abstact;
 using Business.Concrete;
+using Castle.DynamicProxy;
 using Core.Helpers;
+using Core.Interceptors;
+using Core.Security.JWT;
+using Core.Utilities.Security.Jwt;
 using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramework;
 
@@ -29,7 +34,21 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<CommentService>().As<ICommentService>().SingleInstance();
             builder.RegisterType<EFCommentDal>().As<ICommentDal>().SingleInstance();
 
+            builder.RegisterType<UserService>().As<IUserService>();
+            builder.RegisterType<EFUserDal>().As<IUserDal>();
+
+            builder.RegisterType<AuthService>().As<IAuthService>();
+            builder.RegisterType<JwtHelper>().As<ITokenHelper>();
+
             builder.RegisterType<FileHelperManager>().As<IFileHelper>().SingleInstance();
+
+            var assembly = System.Reflection.Assembly.GetExecutingAssembly();
+
+            builder.RegisterAssemblyTypes(assembly).AsImplementedInterfaces()
+                .EnableInterfaceInterceptors(new ProxyGenerationOptions()
+                {
+                    Selector = new AspectInterceptorSelector()
+                }).SingleInstance();
 
         }
     }

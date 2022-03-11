@@ -1,4 +1,5 @@
 ﻿using Business.Abstact;
+using Business.BusinessAspects.Autofac;
 using Business.Constans;
 using Business.ValidationRules.FluentValidation;
 using Core.CrossCuttingConcerns.Validation;
@@ -21,6 +22,8 @@ namespace Business.Concrete
             this.blogTagService = blogTagService;
         }
 
+
+        [SecuredOperation("admin,user,blog.add")]
         public IResult Add(Blog blog)
         {
             ValidationTool.Validate(new BlogValidator(), blog);
@@ -52,6 +55,7 @@ namespace Business.Concrete
 
         public IResult Update(Blog blog)
         {
+            ValidationTool.Validate(new BlogValidator(), blog);
             blogDal.Uptade(blog);
             return new SuccessResult(Messages.BlogUpdated);
         }
