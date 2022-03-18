@@ -43,8 +43,39 @@ namespace ConsoleUI
             //BlogTagService blogTagService = new BlogTagService(new EFBlogTagDal());
             //var result = blogTagService.GetByTagId(1);
             //Console.WriteLine(result.BlogId);
-    
+
+
+            //double[] array = new double[5] ;
+            //for (int i = 0; i < array.Length; i++)
+            //{
+            //    var input = Convert.ToInt32((Console.ReadLine()));
+            //    array[i] = input;
+            //}
+            //foreach (var item in array)
+            //{
+            //    Console.WriteLine(item);
+            //}
+
+            //    char startPeg = 'A'; // start tower in output   
+            //    char endPeg = 'C'; // end tower in output
+            //    char tempPeg = 'B'; // temporary tower in output
+            //    int totalDisks = 5; // number of disks
+
+            //    solveTowers(totalDisks, startPeg, endPeg, tempPeg);
+            //}
+
+            //private static void solveTowers(int n, char startPeg, char endPeg, char tempPeg)
+            //{
+            //    if (n > 0)
+            //    {
+            //        solveTowers(n - 1, startPeg, tempPeg, endPeg);
+            //        Console.WriteLine("Move disk from " + startPeg + ' ' + endPeg);
+            //        solveTowers(n - 1, tempPeg, endPeg, startPeg);
+
+            //    }
            
+
         }
+
     }
 }

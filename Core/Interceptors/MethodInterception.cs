@@ -17,10 +17,10 @@ namespace Core.Interceptors
             {
                 invocation.Proceed();
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
                 isSuccess = false;
-                OnException(invocation, e);
+                OnException(invocation, ex);
                 throw;
             }
             finally

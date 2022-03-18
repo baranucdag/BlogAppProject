@@ -1,5 +1,4 @@
-﻿using Core.Results;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using System;
 using System.IO;
 using System.Linq;
@@ -8,8 +7,6 @@ namespace Core.Helpers
 {
     public class FileHelperManager : IFileHelper
     {
-        //todo:upload methodu güncellencek
-
         // Delete - delete an ımage by ımagePath 
         public void Delete(string filePath)
         {
@@ -25,7 +22,7 @@ namespace Core.Helpers
 
                 throw new Exception(e.Message);
             }
-           
+
         }
 
         // Uptade - update an ımage
@@ -33,18 +30,18 @@ namespace Core.Helpers
         {
             try
             {
-               if (File.Exists(filePath))
-            {
-                File.Delete(filePath);
-            }
-            return Upload(file, root);
+                if (File.Exists(filePath))
+                {
+                    File.Delete(filePath);
+                }
+                return Upload(file, root);
             }
             catch (Exception e)
             {
 
                 throw new Exception(e.Message);
             }
-            
+
         }
 
 
@@ -74,9 +71,11 @@ namespace Core.Helpers
                     }
 
                 }
+                else return "file type is not allowed";
+
 
             }
-            return null;
+            return "file is empty";
         }
     }
 }

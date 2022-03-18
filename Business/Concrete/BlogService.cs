@@ -23,7 +23,7 @@ namespace Business.Concrete
         }
 
 
-        [SecuredOperation("admin,user,blog.add")]
+        [SecuredOperation("admin")]
         public IResult Add(Blog blog)
         {
             ValidationTool.Validate(new BlogValidator(), blog);
