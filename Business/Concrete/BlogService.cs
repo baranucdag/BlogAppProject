@@ -1,7 +1,10 @@
 ﻿using Business.Abstact;
+using Business.BusinessAspects;
 using Business.BusinessAspects.Autofac;
 using Business.Constans;
+using Business.CrossCuttingConcerns.SecuredOperation;
 using Business.ValidationRules.FluentValidation;
+using Core.Aspects;
 using Core.CrossCuttingConcerns.Validation;
 using Core.Results;
 using DataAccess.Abstract;
@@ -23,15 +26,20 @@ namespace Business.Concrete
         }
 
 
-        [SecuredOperation("admin")]
+        //[SecuredOperation("admin")]
+        //[ValidationAspect(typeof(BlogValidator))]
         public IResult Add(Blog blog)
         {
-            ValidationTool.Validate(new BlogValidator(), blog);
+            //ValidationTool.Validate(new BlogValidator(), blog);
+            SecuredOperationTool securedOperation = new SecuredOperationTool("admin");
+            securedOperation.SecuredOperation();
+
             blogDal.Add(blog);
             blog.CreatedTime = System.DateTime.Now;
             return new SuccessResult(Messages.BlogAdded);
         }
 
+        [SecuredOperation("blog.delete")]
         public IResult Delete(Blog blog)
         {
             blogDal.Delete(blog);
