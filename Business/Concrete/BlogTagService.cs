@@ -35,12 +35,12 @@ namespace Business.Concrete
 
         public IDataResult<List<BlogTag>> GetByBlogId(int id)
         {
-            return new SuccessDataResult<List<BlogTag>>(blogTagDal.GetAll(b => b.BlogId == id),Messages.DataListed);
+            return new SuccessDataResult<List<BlogTag>>(blogTagDal.GetAll(x => x.BlogId == id),Messages.DataListed);
         }
 
         public IDataResult<BlogTag> GetByTagId(int id)
         {
-            return new SuccessDataResult<BlogTag>(blogTagDal.Get(b => b.TagId == id),Messages.DataListed);
+            return new SuccessDataResult<BlogTag>(blogTagDal.Get(x => x.TagId == id),Messages.DataListed);
         }
 
         public IResult Update(BlogTag blogTag)

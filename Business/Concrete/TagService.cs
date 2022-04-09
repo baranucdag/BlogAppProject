@@ -33,7 +33,7 @@ namespace Business.Concrete
 
         public IDataResult<Tag> GetById(int id)
         {
-            return new SuccessDataResult<Tag>(tagDal.Get(t => t.Id == id),Messages.DataListed);
+            return new SuccessDataResult<Tag>(tagDal.Get(x => x.Id == id),Messages.DataListed);
         }
 
         public IResult Update(Tag tag)

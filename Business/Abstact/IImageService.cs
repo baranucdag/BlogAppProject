@@ -11,9 +11,9 @@ namespace Business.Abstact
 {
     public interface IImageService
     {
-        IResult Add(IFormFile file, Image ımage);
-        IResult Delete(Image ımage);
-        IResult Update(IFormFile file, Image ımage);
+        IResult Add(IFormFile file, Image image);
+        IResult Delete(Image image);
+        IResult Update(IFormFile file, Image image);
         IDataResult<List<Image>> GetAll();
         IDataResult<List<Image>> GetByBlogId(int carId);
         IDataResult<Image> GetByImageId(int imageId);

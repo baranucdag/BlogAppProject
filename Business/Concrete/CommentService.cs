@@ -34,12 +34,12 @@ namespace Business.Concrete
 
         public IDataResult<Comment> GetByBlogId(int id)
         {
-            return new SuccessDataResult<Comment>(commentDal.Get(c => c.BlogId == id));
+            return new SuccessDataResult<Comment>(commentDal.Get(x => x.BlogId == id));
         }
 
         public IDataResult<Comment> GetByCommentId(int id)
         {
-            return new SuccessDataResult<Comment>(commentDal.Get(c => c.Id == id));
+            return new SuccessDataResult<Comment>(commentDal.Get(x => x.Id == id));
         }
 
         public IResult Update(Comment comment)

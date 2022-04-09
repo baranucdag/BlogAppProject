@@ -10,12 +10,12 @@ namespace WebAPI.Controllers
     public class ImagesController : ControllerBase
     {
         private IImageService imageService;
-        public ImagesController(IImageService ımageService)
+        public ImagesController(IImageService imageService)
         {
-            this.imageService = ımageService;
+            this.imageService = imageService;
         }
 
-        [HttpPost("add")]
+        [HttpPost("Add")]
         public IActionResult Add([FromForm(Name = ("Image"))] IFormFile file, [FromForm] Image image)
         {
             var result = imageService.Add(file, image);
@@ -26,10 +26,10 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
-        [HttpPost("delete")]
-        public IActionResult Delete(Image ımage)
+        [HttpPost("Delete")]
+        public IActionResult Delete(Image image)
         {
-            var deletedImage = imageService.GetByImageId(ımage.Id).Data;
+            var deletedImage = imageService.GetByImageId(image.Id).Data;
             var result = imageService.Delete(deletedImage);
             if (result.Success)
             {
@@ -38,10 +38,10 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
-        [HttpPost("update")]
-        public IActionResult Update([FromForm] IFormFile file, [FromForm] Image ımage)
+        [HttpPost("Update")]
+        public IActionResult Update([FromForm] IFormFile file, [FromForm] Image image)
         {
-            var result = imageService.Update(file, ımage);
+            var result = imageService.Update(file, image);
             if (result.Success)
             {
                 return Ok(result);
@@ -50,7 +50,7 @@ namespace WebAPI.Controllers
         }
 
 
-        [HttpGet("getall")]
+        [HttpGet("GetAll")]
         public IActionResult GetAll()
         {
             var result = imageService.GetAll();
@@ -61,7 +61,7 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
-        [HttpGet("getbyblogid")]
+        [HttpGet("GetByBlogId")]
         public IActionResult GetByBlogId(int blogId)
         {
             var result = imageService.GetByBlogId(blogId);
@@ -72,7 +72,7 @@ namespace WebAPI.Controllers
             return Ok(result);
         }
 
-        [HttpGet("getbyimageid")]
+        [HttpGet("GetByImageId")]
         public IActionResult GetByImageId(int imageId)
         {
             var result = imageService.GetByImageId(imageId);

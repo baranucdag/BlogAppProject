@@ -31,15 +31,14 @@ namespace Business.Concrete
         public IResult Add(Blog blog)
         {
             //ValidationTool.Validate(new BlogValidator(), blog);
-            SecuredOperationTool securedOperation = new SecuredOperationTool("admin");
-            securedOperation.SecuredOperation();
+           // SecuredOperationTool securedOperation = new SecuredOperationTool("admin");
 
             blogDal.Add(blog);
             blog.CreatedTime = System.DateTime.Now;
             return new SuccessResult(Messages.BlogAdded);
         }
 
-        [SecuredOperation("blog.delete")]
+        //[SecuredOperation("blog.delete")]
         public IResult Delete(Blog blog)
         {
             blogDal.Delete(blog);
@@ -56,9 +55,9 @@ namespace Business.Concrete
             return new SuccessDataResult<List<BlogTag>>(blogTagService.GetByBlogId(id).Data, Messages.DataListed);
         }
 
-        public IDataResult<List<BlogDetailDto>> GetBlogDetail(int id)
+        public IDataResult<BlogDetailDto> GetBlogDetail(int id)
         {
-            return new SuccessDataResult<List<BlogDetailDto>>(blogDal.getBlogDetail(b => b.BlogId == id).ToList(), Messages.DataListed);
+            return new SuccessDataResult<BlogDetailDto>(blogDal.getBlogDetail(x => x.BlogId == id), Messages.DataListed);
         }
 
         public IResult Update(Blog blog)
@@ -66,6 +65,11 @@ namespace Business.Concrete
             ValidationTool.Validate(new BlogValidator(), blog);
             blogDal.Uptade(blog);
             return new SuccessResult(Messages.BlogUpdated);
+        }
+
+        public IDataResult<Blog> GetByBlogId(int id)
+        {
+            return new SuccessDataResult<Blog>(blogDal.Get(x => x.Id == id), Messages.DataListed);
         }
     }
 }

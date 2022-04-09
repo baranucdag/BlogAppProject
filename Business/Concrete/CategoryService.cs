@@ -35,7 +35,7 @@ namespace Business.Concrete
 
         public IDataResult<Category> GetById(int id)
         {
-            return new SuccessDataResult<Category>(categoryDal.Get(c => c.Id == id),Messages.DataListed);
+            return new SuccessDataResult<Category>(categoryDal.Get(x => x.Id == id),Messages.DataListed);
         }
 
         public IResult Update(Category category)

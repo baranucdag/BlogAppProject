@@ -14,7 +14,7 @@ namespace WebAPI.Controllers
             this.tagService = tagService;
         }
 
-        [HttpGet("getall")]
+        [HttpGet("GetAll")]
         public IActionResult GetAll()
         {
             var result = tagService.GetAll();
@@ -25,7 +25,7 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
-        [HttpGet("getbytagid")]
+        [HttpGet("GetByTagId")]
         public IActionResult GetByTagId(int tagId)
         {
             var result = tagService.GetById(tagId);
@@ -36,7 +36,7 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
-        [HttpPost("add")]
+        [HttpPost("Add")]
         public IActionResult Add(Tag tag)
         {
             var result = tagService.Add(tag);
@@ -47,7 +47,7 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
-        [HttpPost("delete")]
+        [HttpPost("Delete")]
         public IActionResult Delete(Tag tag)
         {
             var result = tagService.Delete(tag);
@@ -58,7 +58,7 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
-        [HttpPost("update")]
+        [HttpPost("Update")]
         public IActionResult Update(Tag tag)
         {
             var result = tagService.Update(tag);

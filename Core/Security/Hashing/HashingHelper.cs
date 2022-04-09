@@ -5,8 +5,6 @@ namespace Core.Security.Hashing
     public class HashingHelper
     {
         // creating hash and salt of a given password
-        //todo: string parametrelere null check ekle (IDataResult)
-        //todo: return try-cath bloguna al (IDataResult)
         public static void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)  //out returns values
         {
             using (var hmac = new System.Security.Cryptography.HMACSHA512())

@@ -3,15 +3,11 @@ using Business.Constans;
 using Core.Entities.Concrete;
 using Core.Results;
 using DataAccess.Abstract;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Business.Concrete
 {
-    public class UserService:IUserService
+    public class UserService : IUserService
     {
         IUserDal userDal;
 
@@ -39,7 +35,7 @@ namespace Business.Concrete
 
         public IDataResult<User> GetByUserId(int id)
         {
-            return new SuccessDataResult<User>(userDal.Get(u => u.Id == id));
+            return new SuccessDataResult<User>(userDal.Get(x => x.Id == id));
         }
 
         public IResult Update(User user)
@@ -54,7 +50,8 @@ namespace Business.Concrete
         }
         public User GetByMail(string email)
         {
-            return userDal.Get(u => u.Email == email);
+            //todo:email küçük yada büyük girerse giriş olur mu check et, yoksa uppercase ile kontrol et, I İ problemini halletmeye çalış: örnek:İsmail@gmail.com dönüşümü
+            return userDal.Get(x => x.Email == email);
         }
     }
 }

@@ -56,26 +56,52 @@ namespace ConsoleUI
             //    Console.WriteLine(item);
             //}
 
-            //    char startPeg = 'A'; // start tower in output   
-            //    char endPeg = 'C'; // end tower in output
-            //    char tempPeg = 'B'; // temporary tower in output
-            //    int totalDisks = 5; // number of disks
+        //    char baslngicStun = 'A'; // başlangıç sütunu   
+        //    char sonucSutun = 'C'; // sonuç sütunu
+        //    char geciciStun = 'B'; //geçici olarak disklerin tutulacağı sütun
+        //    int totalDisk = 3; // totaldeki disk sayısı (N sayıda olabilir)
 
-            //    solveTowers(totalDisks, startPeg, endPeg, tempPeg);
-            //}
+        //    CozumFonk(totalDisk, baslngicStun, sonucSutun, geciciStun);
+        //}
 
-            //private static void solveTowers(int n, char startPeg, char endPeg, char tempPeg)
+        //private static void CozumFonk(int n, char baslngicStun, char sonucSutun, char geciciStun)
+        //{
+        //    if (n > 0)
+        //    {
+        //        CozumFonk(n - 1, baslngicStun, geciciStun, sonucSutun);  
+        //        Console.WriteLine("diski " + baslngicStun + " dan" + ' ' + sonucSutun + " 'ye taşı");
+        //        CozumFonk(n - 1, geciciStun, sonucSutun, baslngicStun);
+
+        //    }
+
+
+
+
+            //char[] char_array = { 'A', 'B', 'C', 'D', 'E' };
+            //Console.WriteLine("ORİJİNAL DİZİ : ");
+            //for (int k = 0; k < char_array.Length; k++)
             //{
-            //    if (n > 0)
-            //    {
-            //        solveTowers(n - 1, startPeg, tempPeg, endPeg);
-            //        Console.WriteLine("Move disk from " + startPeg + ' ' + endPeg);
-            //        solveTowers(n - 1, tempPeg, endPeg, startPeg);
-
-            //    }
-           
-
+            //    Console.WriteLine(char_array[k] + " ");
+            //}
+            //Console.WriteLine();
+            //reverse_array(char_array, char_array.Length);
         }
+        //public static void reverse_array(char[] char_array, int n)
+        //{
+        //    char[] dest_array = new char[n];
+        //    int j = n;
+        //    for (int i = 0; i < n; i++)
+        //    {
+        //        dest_array[j - 1] = char_array[i];
+        //        j = j - 1;
+        //    }
 
+        //    Console.WriteLine("ÇEVİRİLMİŞ DİZİ");
+        //    for (int k = 0; k < n; k++)
+        //    {
+        //        Console.WriteLine(dest_array[k] + " ");
+        //    }
+
+        //}
     }
 }

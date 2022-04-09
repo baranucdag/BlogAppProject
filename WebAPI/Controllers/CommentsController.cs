@@ -15,7 +15,7 @@ namespace WebAPI.Controllers
             this.commentService = commentService;
         }
 
-        [HttpGet("getall")]
+        [HttpGet("GetAll")]
         public IActionResult GetAll()
         {
             var result = commentService.GetAll();
@@ -26,7 +26,7 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
-        [HttpGet("getbyblogid")]
+        [HttpGet("GetByBlogId")]
         public IActionResult GetByBlogId(int blogId)
         {
             var result = commentService.GetByBlogId(blogId);
@@ -37,7 +37,7 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
-        [HttpGet("getbycommentid")]
+        [HttpGet("GetByCommentId")]
         public IActionResult GetByCommentId(int commentId)
         {
             var result = commentService.GetByCommentId(commentId);
@@ -48,7 +48,7 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
-        [HttpPost("add")]
+        [HttpPost("Add")]
         public IActionResult Add(Comment comment)
         {
             var result = commentService.Add(comment);
@@ -59,7 +59,7 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
-        [HttpPost("delete")]
+        [HttpPost("Delete")]
         public IActionResult Delete(Comment comment)
         {
             var result = commentService.Delete(comment);
@@ -70,7 +70,7 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
-        [HttpPost("update")]
+        [HttpPost("Update")]
         public IActionResult Update(Comment comment)
         {
             var result = commentService.Update(comment);

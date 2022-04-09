@@ -71,6 +71,17 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
+        [HttpGet("GetBlogById")]
+        public IActionResult GetByBlogById(int id)
+        {
+            var result = blogService.GetByBlogId(id);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
 
     }
 }

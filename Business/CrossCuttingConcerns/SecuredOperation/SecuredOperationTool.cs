@@ -4,10 +4,6 @@ using Core.IoC;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Business.CrossCuttingConcerns.SecuredOperation
 {
@@ -18,7 +14,8 @@ namespace Business.CrossCuttingConcerns.SecuredOperation
         public SecuredOperationTool(string roles)
         {
             this.roles = roles.Split(',');
-            this.httpContextAccessor = ServiceTool.ServiceProvider.GetService<IHttpContextAccessor>();  
+            this.httpContextAccessor = ServiceTool.ServiceProvider.GetService<IHttpContextAccessor>();
+            this.SecuredOperation();
         }
     
         public void SecuredOperation()

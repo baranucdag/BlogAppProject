@@ -43,7 +43,6 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<FileHelperManager>().As<IFileHelper>().SingleInstance();
 
             var assembly = System.Reflection.Assembly.GetExecutingAssembly();
-
             builder.RegisterAssemblyTypes(assembly).AsImplementedInterfaces()
                 .EnableInterfaceInterceptors(new ProxyGenerationOptions()
                 {

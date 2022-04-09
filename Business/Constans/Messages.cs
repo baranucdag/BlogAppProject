@@ -12,11 +12,12 @@
         public static string UserNotFound = "user not found";
         public static string PasswordError = "password error";
         public static string SuccessfulLogin = "successful login";
-        public static string UserAlreadyExists = "user already exist";
+        public static string UserAlreadyExists = "user already exist!";
         public static string AccessTokenCreated = "logged in succesfully";
         public static string UserAdded = "user added";
         public static string UserUpdated = "user updated";
         public static string UserDeleted = "user updated";
+        public static string EmailNullError = "Email cannot be null, please check it!";
     }
 }
 

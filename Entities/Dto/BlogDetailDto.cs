@@ -1,4 +1,5 @@
 ﻿using Core.Entities.Abstract;
+using System;
 
 namespace Entities.Dto
 {
@@ -8,5 +9,7 @@ namespace Entities.Dto
         public string BlogTitle { get; set; }
         public string BlogContent { get; set; }
         public string CategoryName { get; set; }
+        public string Email { get; set; }
+        public DateTime CreatedAt { get; set; }
     }
 }

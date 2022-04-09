@@ -15,7 +15,7 @@ namespace WebAPI.Controllers
             this.blogTagService = blogTagService;   
         }
 
-        [HttpGet("getall")]
+        [HttpGet("GetAll")]
         public IActionResult GetAll()
         {
             var result = blogTagService.GetAll();
@@ -26,7 +26,7 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
-        [HttpGet("getbyblogid")]
+        [HttpGet("GetByBlogId")]
         public IActionResult GetByBlogId(int id)
         {
             var result = blogTagService.GetByBlogId(id);
@@ -37,7 +37,7 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
-        [HttpGet("getbytagid")]
+        [HttpGet("GetByTagId")]
         public IActionResult GetByTagId(int id)
         {
             var result = blogTagService.GetByTagId(id);
@@ -48,7 +48,7 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
-        [HttpPost("add")]
+        [HttpPost("Add")]
         public IActionResult Add(BlogTag blogTag)
         {
             var result = blogTagService.Add(blogTag);
@@ -59,7 +59,7 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
-        [HttpPost("update")]
+        [HttpPost("Update")]
         public IActionResult Update(BlogTag blogTag)
         {
             var result = blogTagService.Update(blogTag);
@@ -70,7 +70,7 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
-        [HttpPost("delete")]
+        [HttpPost("Delete")]
         public IActionResult Delete(BlogTag blogTag)
         {
             var result = blogTagService.Delete(blogTag);
