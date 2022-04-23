@@ -16,7 +16,7 @@ namespace Entities.Concrete
         public string BlogTitle { get; set; }
         public string BlogContent { get; set; }
         public int LikedCount { get; set; }
-        public DateTime CreatedTime { get; set; }
+        public DateTime CreatedAt { get; set; }
 
     }
 }

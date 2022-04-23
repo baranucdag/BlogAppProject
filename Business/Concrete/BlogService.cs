@@ -34,7 +34,7 @@ namespace Business.Concrete
            // SecuredOperationTool securedOperation = new SecuredOperationTool("admin");
 
             blogDal.Add(blog);
-            blog.CreatedTime = System.DateTime.Now;
+            blog.CreatedAt = System.DateTime.Now;
             return new SuccessResult(Messages.BlogAdded);
         }
 

@@ -54,15 +54,16 @@ namespace Business.Concrete
         }
 
         // returns an ımage by blogId
-        public IDataResult<List<Image>> GetByBlogId(int blogId)
+        public IDataResult<Image> GetByBlogId(int blogId)
         {
             var result = CheckBlogImage(blogId);
             if (result.Success)
             {
-                return new ErrorDataResult<List<Image>>(GetDefaultImage(blogId).Data);
+                return new SuccessDataResult<Image>(imageDal.Get(x => x.BlogId == blogId));
             }
 
-            return new SuccessDataResult<List<Image>>(imageDal.GetAll(x => x.BlogId == blogId));
+            
+            return new ErrorDataResult<Image>(GetDefaultImage(blogId).Data);
         }
 
         //returns an ımage by ımageId
@@ -70,7 +71,7 @@ namespace Business.Concrete
         {
             return new SuccessDataResult<Image>(imageDal.Get(x => x.Id == imageId));
         }
-
+            
 
         // checks if any ımage exist by blogId
         private IResult CheckBlogImage(int blogId)
@@ -81,12 +82,14 @@ namespace Business.Concrete
         }
 
         // returns default ımage by blogId
-        private IDataResult<List<Image>> GetDefaultImage(int blogId)
+        private IDataResult<Image> GetDefaultImage(int blogId)
         {
 
-            List<Image> ımage = new List<Image>();
-            ımage.Add(new Image { BlogId = blogId, Date = DateTime.Now, ImagePath = "DefaultImage.jpg" });
-            return new SuccessDataResult<List<Image>>(ımage);
+            Image ımage = new Image();
+            ımage.BlogId = blogId;
+            ımage.Date = DateTime.Now;
+            ımage.ImagePath = "DefaultImage.jpg";
+            return new SuccessDataResult<Image>(ımage);
         }
 
     }

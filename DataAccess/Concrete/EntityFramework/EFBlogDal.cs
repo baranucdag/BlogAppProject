@@ -28,7 +28,7 @@ namespace DataAccess.Concrete.EntityFramework
                                  BlogTitle = t1.BlogTitle,
                                  CategoryName = t2.CategoryName,
                                  Email = t3.Email,
-                                 CreatedAt = t1.CreatedTime
+                                 CreatedAt = t1.CreatedAt
 
                              };
                 return filter == null ? result.FirstOrDefault() : result.Where(filter).FirstOrDefault();

@@ -15,7 +15,7 @@ namespace Business.Abstact
         IResult Delete(Image image);
         IResult Update(IFormFile file, Image image);
         IDataResult<List<Image>> GetAll();
-        IDataResult<List<Image>> GetByBlogId(int carId);
+        IDataResult<Image> GetByBlogId(int carId);
         IDataResult<Image> GetByImageId(int imageId);
     }
 }
