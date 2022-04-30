@@ -1,4 +1,5 @@
 ﻿using Business.Abstact;
+using Business.Concrete;
 using Entities.Concrete;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,7 +15,16 @@ namespace WebAPI.Controllers
             this.blogService = blogService;
         }
 
-
+        [HttpGet("Get")]
+        public IActionResult Get([FromQuery] BlogQueryOptions queryOptions)
+        {
+            var result = blogService.Get(queryOptions);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
 
         [HttpGet("GetAll")]
         public IActionResult GetAll()

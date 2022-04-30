@@ -31,7 +31,7 @@ namespace Business.Concrete
         public IResult Add(Blog blog)
         {
             //ValidationTool.Validate(new BlogValidator(), blog);
-           // SecuredOperationTool securedOperation = new SecuredOperationTool("admin");
+            // SecuredOperationTool securedOperation = new SecuredOperationTool("admin");
 
             blogDal.Add(blog);
             blog.CreatedAt = System.DateTime.Now;
@@ -44,10 +44,16 @@ namespace Business.Concrete
             blogDal.Delete(blog);
             return new SuccessResult(Messages.BlogDeleted);
         }
-
         public IDataResult<List<Blog>> GetAll()
         {
             return new SuccessDataResult<List<Blog>>(blogDal.GetAll().ToList(), Messages.DataListed);
+        }
+
+        public IDataResult<List<Blog>> Get(BlogQueryOptions queryOptions)
+        {
+            if (string.IsNullOrEmpty(queryOptions.Search)) return new SuccessDataResult<List<Blog>>(blogDal.GetAll().ToList(), Messages.DataListed);
+            return new SuccessDataResult<List<Blog>>(blogDal.GetAll(x => x.BlogContent.Contains(queryOptions.Search) || x.BlogTitle.Contains(queryOptions.Search)).ToList(), Messages.DataListed);
+
         }
 
         public IDataResult<List<BlogTag>> GetBlogTags(int id)
@@ -71,5 +77,12 @@ namespace Business.Concrete
         {
             return new SuccessDataResult<Blog>(blogDal.Get(x => x.Id == id), Messages.DataListed);
         }
+
+
+    }
+
+    public class BlogQueryOptions
+    {
+        public string Search { get; set; }
     }
 }
