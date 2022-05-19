@@ -1,5 +1,6 @@
 ﻿using Core.Results;
 using Entities.Concrete;
+using Entities.Dto;
 using System.Collections.Generic;
 
 namespace Business.Abstact
@@ -9,6 +10,7 @@ namespace Business.Abstact
         IDataResult<List<Comment>> GetAll();
         IDataResult<List<Comment>> GetByBlogId(int id);
         IDataResult<Comment> GetByCommentId(int id);
+        IDataResult<List<CommentDetailDto>> GetCommentDetailsByBlogId(int id);
         IResult Add(Comment comment);
         IResult Update(Comment comment);
         IResult Delete(Comment comment);

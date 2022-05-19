@@ -6,19 +6,19 @@ namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CommentsController : ControllerBase
+    public class FavsController : ControllerBase
     {
-        private ICommentService commentService;
-
-        public CommentsController(ICommentService commentService)
+        private IFavService favService;
+        public FavsController(IFavService favService)
         {
-            this.commentService = commentService;
+            this.favService = favService;   
         }
 
-        [HttpGet("GetAll")]
-        public IActionResult GetAll()
+        //get all favs (without parametr)
+        [HttpGet("GetAllFavs")]
+        public IActionResult GetAllFavs()
         {
-            var result = commentService.GetAll();
+            var result = favService.GetAllFavs();
             if (result.Success)
             {
                 return Ok(result);
@@ -26,10 +26,12 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
-        [HttpGet("GetByBlogId")]
-        public IActionResult GetByBlogId(int blogId)
+
+        //get all favs by blog id
+        [HttpGet("GetAllByBlogId")]
+        public IActionResult GetAllByBlogId(int blogId)
         {
-            var result = commentService.GetByBlogId(blogId);
+            var result = favService.GetAllByBlogId(blogId);
             if (result.Success)
             {
                 return Ok(result);
@@ -37,10 +39,11 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
-        [HttpGet("GetByCommentId")]
-        public IActionResult GetByCommentId(int commentId)
+        //get all favs by user id
+        [HttpGet("GetAllByUserId")]
+        public IActionResult GetAllByUserId(int userId)
         {
-            var result = commentService.GetByCommentId(commentId);
+            var result = favService.GetAllByUserId(userId);
             if (result.Success)
             {
                 return Ok(result);
@@ -48,10 +51,11 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
-        [HttpGet("GetCommentDetails")]
-        public IActionResult GetBlogDetails(int id)
+        //get fav count by blog id
+        [HttpGet("GetFavCount")]
+        public IActionResult GetFavCountByBlogId(int id)
         {
-            var result = commentService.GetCommentDetailsByBlogId(id);
+            var result = favService.GetAllCountByBlogId(id);
             if (result.Success)
             {
                 return Ok(result);
@@ -59,10 +63,11 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
+        //add fav
         [HttpPost("Add")]
-        public IActionResult Add(Comment comment)
+        public IActionResult Add(Fav fav)
         {
-            var result = commentService.Add(comment);
+            var result = favService.Add(fav);
             if (result.Success)
             {
                 return Ok(result);
@@ -70,10 +75,11 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
+        //delete fav
         [HttpPost("Delete")]
-        public IActionResult Delete(Comment comment)
+        public IActionResult Delete(Fav fav)
         {
-            var result = commentService.Delete(comment);
+            var result = favService.Delete(fav);
             if (result.Success)
             {
                 return Ok(result);
@@ -81,10 +87,11 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
-        [HttpPost("Update")]
-        public IActionResult Update(Comment comment)
+        //delete by fav id
+        [HttpPost("DeleteById")]
+        public IActionResult Delete(int id)
         {
-            var result = commentService.Update(comment);
+            var result = favService.DeleteById(id);
             if (result.Success)
             {
                 return Ok(result);

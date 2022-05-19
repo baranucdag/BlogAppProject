@@ -1,10 +1,7 @@
 ﻿using Business.Abstact;
-using Business.BusinessAspects;
 using Business.BusinessAspects.Autofac;
 using Business.Constans;
-using Business.CrossCuttingConcerns.SecuredOperation;
 using Business.ValidationRules.FluentValidation;
-using Core.Aspects;
 using Core.CrossCuttingConcerns.Validation;
 using Core.Results;
 using DataAccess.Abstract;
@@ -26,7 +23,7 @@ namespace Business.Concrete
         }
 
 
-        //[SecuredOperation("admin")]
+        [SecuredOperation("admin,blog.add")]
         //[ValidationAspect(typeof(BlogValidator))]
         public IResult Add(Blog blog)
         {
@@ -46,13 +43,27 @@ namespace Business.Concrete
         }
         public IDataResult<List<Blog>> GetAll()
         {
-            return new SuccessDataResult<List<Blog>>(blogDal.GetAll().ToList(), Messages.DataListed);
+            return new SuccessDataResult<List<Blog>>(blogDal.GetAll().OrderBy(x => x.Id).ToList(), Messages.DataListed);
         }
 
-        public IDataResult<List<Blog>> Get(BlogQueryOptions queryOptions)
+        //create only one method by using QueryParamsDto (props )
+        //get all Blogs paged by cursor pagination
+
+        public IDataResult<List<Blog>> GetBlogs(QueryParams queryParams)
         {
-            if (string.IsNullOrEmpty(queryOptions.Search)) return new SuccessDataResult<List<Blog>>(blogDal.GetAll().ToList(), Messages.DataListed);
-            return new SuccessDataResult<List<Blog>>(blogDal.GetAll(x => x.BlogContent.Contains(queryOptions.Search) || x.BlogTitle.Contains(queryOptions.Search)).ToList(), Messages.DataListed);
+            // total count konnrtolünü sağla
+            if (queryParams.SortType == false)
+            {
+                if (string.IsNullOrEmpty(queryParams.QueryString)) return new SuccessDataResult<List<Blog>>(blogDal.GetAll().Take(queryParams.Count).ToList(), Messages.DataListed);
+                return new SuccessDataResult<List<Blog>>(blogDal.GetAll(x => x.BlogContent.Contains(queryParams.QueryString)
+                || x.BlogTitle.Contains(queryParams.QueryString)).Take(queryParams.Count).ToList(), Messages.DataListed);
+            }
+            else
+            {
+                if (string.IsNullOrEmpty(queryParams.QueryString)) return new SuccessDataResult<List<Blog>>(blogDal.GetAll().OrderByDescending(x => x.Id).Take(queryParams.Count).ToList(), Messages.DataListed);
+                return new SuccessDataResult<List<Blog>>(blogDal.GetAll(x => x.BlogContent.Contains(queryParams.QueryString)
+                || x.BlogTitle.Contains(queryParams.QueryString)).OrderByDescending(x => x.Id).Take(queryParams.Count).ToList(), Messages.DataListed);
+            }
 
         }
 
@@ -78,11 +89,5 @@ namespace Business.Concrete
             return new SuccessDataResult<Blog>(blogDal.Get(x => x.Id == id), Messages.DataListed);
         }
 
-
-    }
-
-    public class BlogQueryOptions
-    {
-        public string Search { get; set; }
     }
 }

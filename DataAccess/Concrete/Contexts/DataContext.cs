@@ -16,6 +16,7 @@ namespace DataAccess.Concrete.Contexts
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Image> Images { get; set; }
         public DbSet<Tag> Tags { get; set; }
+        public DbSet<Fav> Favs { get; set; }
         public DbSet<BlogTag> BlogTags { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<OperationClaim> OperationClaims { get; set; }

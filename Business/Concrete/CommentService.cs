@@ -3,6 +3,7 @@ using Business.Constans;
 using Core.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.Dto;
 using System.Collections.Generic;
 
 namespace Business.Concrete
@@ -17,7 +18,6 @@ namespace Business.Concrete
         public IResult Add(Comment comment)
         {
             commentDal.Add(comment);
-            comment.CreatedTime = System.DateTime.Now;
             return new SuccessResult();
         }
 
@@ -42,10 +42,16 @@ namespace Business.Concrete
             return new SuccessDataResult<Comment>(commentDal.Get(x => x.Id == id));
         }
 
+        public IDataResult<List<CommentDetailDto>> GetCommentDetailsByBlogId(int id)
+        {
+            return new SuccessDataResult<List<CommentDetailDto>>(commentDal.GetCommentDetail(x=>x.BlogId==id),Messages.DataListed);
+        }
+
         public IResult Update(Comment comment)
         {
             commentDal.Uptade(comment);
             return new SuccessResult();
         }
+
     }
 }

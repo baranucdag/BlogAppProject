@@ -18,6 +18,8 @@
         public static string UserUpdated = "user updated";
         public static string UserDeleted = "user updated";
         public static string EmailNullError = "Email cannot be null, please check it!";
+        public static string FavAdded = " Fav added succesfully!";
+        public static string FavDeleted = " Fav deleted succesfully!";
     }
 }
 

@@ -1,6 +1,7 @@
 ﻿using Business.Abstact;
 using Business.Concrete;
 using Entities.Concrete;
+using Entities.Dto;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers
@@ -15,10 +16,10 @@ namespace WebAPI.Controllers
             this.blogService = blogService;
         }
 
-        [HttpGet("Get")]
-        public IActionResult Get([FromQuery] BlogQueryOptions queryOptions)
+        [HttpGet("GetAll")]
+        public IActionResult GetAll()
         {
-            var result = blogService.Get(queryOptions);
+            var result = blogService.GetAll();
             if (result.Success)
             {
                 return Ok(result);
@@ -26,10 +27,11 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
-        [HttpGet("GetAll")]
-        public IActionResult GetAll()
+        [HttpGet("GetBlogs")]
+        public IActionResult GetBlogs([FromQuery] QueryParams queryParams)
         {
-            var result = blogService.GetAll();
+
+            var result = blogService.GetBlogs(queryParams);
             if (result.Success)
             {
                 return Ok(result);

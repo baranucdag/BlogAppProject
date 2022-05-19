@@ -8,8 +8,8 @@ namespace Business.Abstact
 {
     public interface IBlogService
     {
-        IDataResult<List<Blog>> Get(BlogQueryOptions queryOptions);
         IDataResult<List<Blog>> GetAll();
+        IDataResult<List<Blog>> GetBlogs(QueryParams queryParams);
         IDataResult<BlogDetailDto> GetBlogDetail(int id);
         IDataResult<List<BlogTag>> GetBlogTags(int id);
         IDataResult<Blog> GetByBlogId(int id);

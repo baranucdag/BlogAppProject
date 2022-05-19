@@ -34,6 +34,9 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<CommentService>().As<ICommentService>().SingleInstance();
             builder.RegisterType<EFCommentDal>().As<ICommentDal>().SingleInstance();
 
+            builder.RegisterType<FavService>().As<IFavService>().SingleInstance();
+            builder.RegisterType<EFFavDal>().As<IFavDal>().SingleInstance();
+
             builder.RegisterType<UserService>().As<IUserService>();
             builder.RegisterType<EFUserDal>().As<IUserDal>();
 
