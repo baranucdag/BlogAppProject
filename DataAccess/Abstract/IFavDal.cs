@@ -5,6 +5,6 @@ namespace DataAccess.Abstract
 {
     public interface IFavDal  : IEntityRepository<Fav>
     {
-         void DeleteById(int id);
+        void DeleteById(int blogId, int userId);
     }
 }

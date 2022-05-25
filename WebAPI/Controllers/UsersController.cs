@@ -36,7 +36,17 @@ namespace WebAPI.Controllers
                 return Ok(result);
             }
             return BadRequest(result);
+        }
 
+        [HttpGet("GetUserPaged")]
+        public IActionResult GetBlogsPaged(int pageNumber, int pageSize)
+        {
+            var result = userService.GetBlogsPaginated(pageNumber, pageSize);
+            if (result != null)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
         }
 
         [HttpPost("Add")]

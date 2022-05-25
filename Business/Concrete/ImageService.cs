@@ -71,13 +71,13 @@ namespace Business.Concrete
         {
             return new SuccessDataResult<Image>(imageDal.Get(x => x.Id == imageId));
         }
-            
+           
 
         // checks if any ımage exist by blogId
         private IResult CheckBlogImage(int blogId)
         {
             var result = imageDal.GetAll(x => x.BlogId == blogId).Count;
-            return result > 0 ? new SuccessResult() : new ErrorResult();
+            return result != 0 ? new SuccessResult() : new ErrorResult();
            
         }
 
@@ -92,5 +92,11 @@ namespace Business.Concrete
             return new SuccessDataResult<Image>(ımage);
         }
 
+        //delete image by image path
+        public IResult DeleteByImagePath(string path)
+        {
+            imageDal.DeleteByImagePath(path);
+            return new SuccessResult();
+        }
     }
 }

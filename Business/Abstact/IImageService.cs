@@ -13,6 +13,7 @@ namespace Business.Abstact
     {
         IResult Add(IFormFile file, Image image);
         IResult Delete(Image image);
+        IResult DeleteByImagePath(string path);  
         IResult Update(IFormFile file, Image image);
         IDataResult<List<Image>> GetAll();
         IDataResult<Image> GetByBlogId(int carId);

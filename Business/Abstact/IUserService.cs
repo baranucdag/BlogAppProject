@@ -1,4 +1,5 @@
 ﻿using Core.Entities.Concrete;
+using Core.Helpers.PaginationHelper;
 using Core.Results;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ namespace Business.Abstact
     {
         IDataResult<List<User>> GetAll();
         IDataResult<User> GetByUserId(int id);
+        PaginationHelper<User> GetBlogsPaginated(int pageNumber, int pageSize);
         IResult Add(User user);
         IResult Update(User user);
         IResult Delete(User user);

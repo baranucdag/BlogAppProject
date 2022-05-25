@@ -15,7 +15,7 @@ namespace Business.Abstact
         IDataResult<List<Fav>> GetAllByUserId(int userId);
         IDataResult<int> GetAllCountByBlogId(int id);
         IResult Delete(Fav fav);
-        IResult DeleteById(int id);
+        IResult DeleteById(int blogId, int userId);
         IResult Add(Fav fav);
     }
 }

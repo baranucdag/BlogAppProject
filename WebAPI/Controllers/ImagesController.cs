@@ -39,7 +39,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("Update")]
-        public IActionResult Update([FromForm] IFormFile file, [FromForm] Image image)
+        public IActionResult Update([FromForm(Name =("Image"))] IFormFile file, [FromForm] Image image)
         {
             var result = imageService.Update(file, image);
             if (result.Success)

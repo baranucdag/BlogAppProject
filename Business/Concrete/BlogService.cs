@@ -3,6 +3,7 @@ using Business.BusinessAspects.Autofac;
 using Business.Constans;
 using Business.ValidationRules.FluentValidation;
 using Core.CrossCuttingConcerns.Validation;
+using Core.Helpers.PaginationHelper;
 using Core.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -46,12 +47,16 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Blog>>(blogDal.GetAll().OrderBy(x => x.Id).ToList(), Messages.DataListed);
         }
 
-        //create only one method by using QueryParamsDto (props )
-        //get all Blogs paged by cursor pagination
+        //get blogs paged (by using pagination helper)
+        public PaginationHelper<Blog> GetBlogsPaginated(int pageNumber, int pageSize)
+        {
+            return (PaginationHelper<Blog>.ToPagedList(blogDal.GetAll(), pageNumber, pageSize));
+        }
+
 
         public IDataResult<List<Blog>> GetBlogs(QueryParams queryParams)
         {
-            // total count konnrtolünü sağla
+            // check total count of data (to hide 'see more blog' button)
             if (queryParams.SortType == false)
             {
                 if (string.IsNullOrEmpty(queryParams.QueryString)) return new SuccessDataResult<List<Blog>>(blogDal.GetAll().Take(queryParams.Count).ToList(), Messages.DataListed);

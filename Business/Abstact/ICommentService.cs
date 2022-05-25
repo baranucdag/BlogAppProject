@@ -14,5 +14,6 @@ namespace Business.Abstact
         IResult Add(Comment comment);
         IResult Update(Comment comment);
         IResult Delete(Comment comment);
+        IResult DeleteById(int id); 
     }
 }

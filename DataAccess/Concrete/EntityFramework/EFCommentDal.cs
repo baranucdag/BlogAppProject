@@ -12,6 +12,16 @@ namespace DataAccess.Concrete.EntityFramework
 {
     public class EFCommentDal : EFEntityRepositoryBase<Comment, DataContext>, ICommentDal
     {
+        public void DeleteByCommentId(int id)
+        {
+            using (DataContext context = new DataContext())
+            {
+                var deletedEntity = context.Comments.First(x => x.Id==id);
+                context.Remove(deletedEntity);
+                context.SaveChanges();
+            }
+        }
+
         public List<CommentDetailDto> GetCommentDetail(Expression<Func<CommentDetailDto, bool>> filter = null)
         {
             using (var context = new DataContext())
@@ -24,6 +34,7 @@ namespace DataAccess.Concrete.EntityFramework
                                  CommentId = t1.Id,
                                  BlogId = t1.BlogId,
                                  UserEmail = t2.Email,
+                                 UserId = t2.Id,
                                  CommentContent = t1.CommentContent,
                                  CreatedTime = t1.CreatedTime
 

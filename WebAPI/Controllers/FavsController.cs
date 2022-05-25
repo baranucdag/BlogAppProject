@@ -87,11 +87,11 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
-        //delete by fav id
+        //delete by fav user id and blog id
         [HttpPost("DeleteById")]
-        public IActionResult Delete(int id)
+        public IActionResult Delete(int blogId,int userId)
         {
-            var result = favService.DeleteById(id);
+            var result = favService.DeleteById(blogId,userId);
             if (result.Success)
             {
                 return Ok(result);

@@ -1,4 +1,5 @@
 ﻿using Business.Concrete;
+using Core.Helpers.PaginationHelper;
 using Core.Results;
 using Entities.Concrete;
 using Entities.Dto;
@@ -11,6 +12,7 @@ namespace Business.Abstact
         IDataResult<List<Blog>> GetAll();
         IDataResult<List<Blog>> GetBlogs(QueryParams queryParams);
         IDataResult<BlogDetailDto> GetBlogDetail(int id);
+        PaginationHelper<Blog> GetBlogsPaginated(int pageNumber, int pageSize);
         IDataResult<List<BlogTag>> GetBlogTags(int id);
         IDataResult<Blog> GetByBlogId(int id);
         IResult Add(Blog blog);

@@ -81,6 +81,17 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
+        [HttpPost("DeleteById")]
+        public IActionResult DeleteById(int id)
+        {
+            var result = commentService.DeleteById(id);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
         [HttpPost("Update")]
         public IActionResult Update(Comment comment)
         {

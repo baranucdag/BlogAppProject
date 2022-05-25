@@ -27,6 +27,12 @@ namespace Business.Concrete
             return new SuccessResult();
         }
 
+        public IResult DeleteById(int id)
+        {
+            commentDal.DeleteByCommentId(id);
+            return new SuccessResult();
+        }
+
         public IDataResult<List<Comment>> GetAll()
         {
             return new SuccessDataResult<List<Comment>>(commentDal.GetAll(), Messages.DataListed);

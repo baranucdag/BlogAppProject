@@ -1,6 +1,7 @@
 ﻿using Business.Abstact;
 using Business.Constans;
 using Core.Entities.Concrete;
+using Core.Helpers.PaginationHelper;
 using Core.Results;
 using DataAccess.Abstract;
 using System.Collections.Generic;
@@ -33,6 +34,12 @@ namespace Business.Concrete
             return new SuccessDataResult<List<User>>(userDal.GetAll(), Messages.DataListed);
         }
 
+        //get users paged (by using pagination helper)
+        public PaginationHelper<User> GetBlogsPaginated(int pageNumber, int pageSize)
+        {
+            return (PaginationHelper<User>.ToPagedList(userDal.GetAll(), pageNumber, pageSize));
+        }
+
         public IDataResult<User> GetByUserId(int id)
         {
             return new SuccessDataResult<User>(userDal.Get(x => x.Id == id));
@@ -50,7 +57,6 @@ namespace Business.Concrete
         }
         public User GetByMail(string email)
         {
-            //todo:email küçük yada büyük girerse giriş olur mu check et, yoksa uppercase ile kontrol et, I İ problemini halletmeye çalış: örnek:İsmail@gmail.com dönüşümü
             return userDal.Get(x => x.Email == email);
         }
     }
