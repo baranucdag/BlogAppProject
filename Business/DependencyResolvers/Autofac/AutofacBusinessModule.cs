@@ -43,6 +43,13 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<AuthService>().As<IAuthService>();
             builder.RegisterType<JwtHelper>().As<ITokenHelper>();
 
+            builder.RegisterType<OperationClaimService>().As<IOperationClaimService>();
+            builder.RegisterType<EFOperationClaimDal>().As<IOperationClaimDal>();
+
+            builder.RegisterType<UserOperationClaimService>().As<IUserOperationClaimService>();
+            builder.RegisterType<EFUserOperationClaimDal>().As<IUserOperationClaimDal>();
+
+
             builder.RegisterType<FileHelperManager>().As<IFileHelper>().SingleInstance();
 
             var assembly = System.Reflection.Assembly.GetExecutingAssembly();

@@ -15,6 +15,6 @@ namespace Entities.Dto
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public int OperationClaimId { get; set; }
-        public string claimName { get; set; }
+        public string ClaimName { get; set; }
     }
 }
