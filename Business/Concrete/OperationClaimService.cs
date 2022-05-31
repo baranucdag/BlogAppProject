@@ -4,6 +4,7 @@ using Core.Entities.Concrete;
 using Core.Helpers.PaginationHelper;
 using Core.Results;
 using DataAccess.Abstract;
+using System.Collections.Generic;
 
 namespace Business.Concrete
 {
@@ -27,6 +28,10 @@ namespace Business.Concrete
             return new SuccessResult();
         }
 
+        public IDataResult<List<OperationClaim>> GetAllClaims()
+        {
+            return new SuccessDataResult<List<OperationClaim>>(operationClaimDal.GetAll(), Messages.DataListed);
+        }
         public PaginationHelper<OperationClaim> GetAllCalimsPaged(int pageNumber, int pageSize)
         {
             return (PaginationHelper<OperationClaim>.ToPagedList(operationClaimDal.GetAll(), pageNumber, pageSize));

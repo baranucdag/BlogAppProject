@@ -1,7 +1,7 @@
 ﻿using Business.Abstact;
-using Business.Concrete;
 using Entities.Concrete;
 using Entities.Dto;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers
@@ -40,9 +40,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("Add")]
-        public IActionResult Add(Blog blog)
+        public IActionResult Add([FromForm(Name = ("Image"))] IFormFile file, [FromForm] Blog blog)
         {
-            var result = blogService.Add(blog);
+            var result = blogService.Add(file,blog);
             if (result.Success)
             {
                 return Ok(result);
@@ -51,9 +51,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("Update")]
-        public IActionResult Update(Blog blog)
+        public IActionResult Update([FromForm(Name = ("Image"))] IFormFile file, [FromForm] Blog blog)
         {
-            var result = blogService.Update(blog);
+            var result = blogService.Update(file,blog);
             if (result.Success)
             {
                 return Ok(result);

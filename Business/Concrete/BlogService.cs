@@ -1,13 +1,14 @@
 ﻿using Business.Abstact;
-using Business.BusinessAspects.Autofac;
 using Business.Constans;
 using Business.ValidationRules.FluentValidation;
 using Core.CrossCuttingConcerns.Validation;
+using Core.Helpers;
 using Core.Helpers.PaginationHelper;
 using Core.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.Dto;
+using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -17,31 +18,34 @@ namespace Business.Concrete
     {
         private IBlogDal blogDal;
         private IBlogTagService blogTagService;
-        public BlogService(IBlogDal blogDal, IBlogTagService blogTagService)
+        private IFileHelper fileHelper;
+        public BlogService(IBlogDal blogDal, IBlogTagService blogTagService, IFileHelper fileHelper)
         {
             this.blogDal = blogDal;
             this.blogTagService = blogTagService;
+            this.fileHelper = fileHelper;
         }
 
-
-        [SecuredOperation("admin,blog.add")]
+        //[SecuredOperation("admin,blog.add")]
         //[ValidationAspect(typeof(BlogValidator))]
-        public IResult Add(Blog blog)
+        public IResult Add(IFormFile file, Blog blog)
         {
             //ValidationTool.Validate(new BlogValidator(), blog);
             // SecuredOperationTool securedOperation = new SecuredOperationTool("admin");
-
-            blogDal.Add(blog);
             blog.CreatedAt = System.DateTime.Now;
-            return new SuccessResult(Messages.BlogAdded);
+            blog.ImagePath = fileHelper.Upload(file, PathConstants.ImagesPath);
+            blogDal.Add(blog);
+            return new SuccessResult("blog added");
         }
 
         //[SecuredOperation("blog.delete")]
         public IResult Delete(Blog blog)
         {
+            fileHelper.Delete(blog.ImagePath);
             blogDal.Delete(blog);
             return new SuccessResult(Messages.BlogDeleted);
         }
+
         public IDataResult<List<Blog>> GetAll()
         {
             return new SuccessDataResult<List<Blog>>(blogDal.GetAll().OrderBy(x => x.Id).ToList(), Messages.DataListed);
@@ -82,10 +86,11 @@ namespace Business.Concrete
             return new SuccessDataResult<BlogDetailDto>(blogDal.getBlogDetail(x => x.BlogId == id), Messages.DataListed);
         }
 
-        public IResult Update(Blog blog)
+        public IResult Update(IFormFile file, Blog blog)
         {
-            ValidationTool.Validate(new BlogValidator(), blog);
+            blog.ImagePath = fileHelper.Update(file, PathConstants.ImagesPath + blog.ImagePath, PathConstants.ImagesPath);
             blogDal.Uptade(blog);
+            ValidationTool.Validate(new BlogValidator(), blog);
             return new SuccessResult(Messages.BlogUpdated);
         }
 
