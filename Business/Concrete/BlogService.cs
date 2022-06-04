@@ -1,4 +1,5 @@
 ﻿using Business.Abstact;
+using Business.BusinessAspects.Autofac;
 using Business.Constans;
 using Business.ValidationRules.FluentValidation;
 using Core.CrossCuttingConcerns.Validation;
@@ -17,12 +18,10 @@ namespace Business.Concrete
     public class BlogService : IBlogService
     {
         private IBlogDal blogDal;
-        private IBlogTagService blogTagService;
         private IFileHelper fileHelper;
-        public BlogService(IBlogDal blogDal, IBlogTagService blogTagService, IFileHelper fileHelper)
+        public BlogService(IBlogDal blogDal, IFileHelper fileHelper)
         {
             this.blogDal = blogDal;
-            this.blogTagService = blogTagService;
             this.fileHelper = fileHelper;
         }
 
@@ -76,11 +75,6 @@ namespace Business.Concrete
 
         }
 
-        public IDataResult<List<BlogTag>> GetBlogTags(int id)
-        {
-            return new SuccessDataResult<List<BlogTag>>(blogTagService.GetByBlogId(id).Data, Messages.DataListed);
-        }
-
         public IDataResult<BlogDetailDto> GetBlogDetail(int id)
         {
             return new SuccessDataResult<BlogDetailDto>(blogDal.getBlogDetail(x => x.BlogId == id), Messages.DataListed);
@@ -88,7 +82,10 @@ namespace Business.Concrete
 
         public IResult Update(IFormFile file, Blog blog)
         {
-            blog.ImagePath = fileHelper.Update(file, PathConstants.ImagesPath + blog.ImagePath, PathConstants.ImagesPath);
+            if (file != null)
+            {
+                blog.ImagePath = fileHelper.Update(file, PathConstants.ImagesPath + blog.ImagePath, PathConstants.ImagesPath);
+            }
             blogDal.Uptade(blog);
             ValidationTool.Validate(new BlogValidator(), blog);
             return new SuccessResult(Messages.BlogUpdated);

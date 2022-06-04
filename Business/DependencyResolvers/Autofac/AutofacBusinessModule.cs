@@ -19,17 +19,9 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<BlogService>().As<IBlogService>().SingleInstance();
             builder.RegisterType<EFBlogDal>().As<IBlogDal>().SingleInstance();
 
-            builder.RegisterType<BlogTagService>().As<IBlogTagService>().SingleInstance();
-            builder.RegisterType<EFBlogTagDal>().As<IBlogTagDal>().SingleInstance();
 
             builder.RegisterType<CategoryService>().As<ICategoryService>().SingleInstance();
             builder.RegisterType<EFCategoryDal>().As<ICategoryDal>().SingleInstance();
-
-            builder.RegisterType<TagService>().As<ITagService>().SingleInstance();
-            builder.RegisterType<EFTagDal>().As<ITagDal>().SingleInstance();
-
-            builder.RegisterType<ImageService>().As<IImageService>().SingleInstance();
-            builder.RegisterType<EFImageDal>().As<IImageDal>().SingleInstance();
 
             builder.RegisterType<CommentService>().As<ICommentService>().SingleInstance();
             builder.RegisterType<EFCommentDal>().As<ICommentDal>().SingleInstance();
