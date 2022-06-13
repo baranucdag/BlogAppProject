@@ -9,6 +9,7 @@ namespace Business.Abstact
         IDataResult<List<Category>> GetAll();
         IDataResult<Category> GetById(int id);
         IResult Add(Category category);
+        IDataResult<List<Category>> GetPaged(int pageNumber, int pageSize);
         IResult Update(Category category);
         IResult Delete(Category category);
     }

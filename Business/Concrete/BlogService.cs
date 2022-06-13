@@ -2,9 +2,9 @@
 using Business.BusinessAspects.Autofac;
 using Business.Constans;
 using Business.ValidationRules.FluentValidation;
+using Core.Aspects;
 using Core.CrossCuttingConcerns.Validation;
 using Core.Helpers;
-using Core.Helpers.PaginationHelper;
 using Core.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -25,8 +25,8 @@ namespace Business.Concrete
             this.fileHelper = fileHelper;
         }
 
-        //[SecuredOperation("admin,blog.add")]
-        //[ValidationAspect(typeof(BlogValidator))]
+        [SecuredOperation("admin,blog.add")]
+        [ValidationAspect(typeof(BlogValidator))]
         public IResult Add(IFormFile file, Blog blog)
         {
             //ValidationTool.Validate(new BlogValidator(), blog);
@@ -37,7 +37,6 @@ namespace Business.Concrete
             return new SuccessResult("blog added");
         }
 
-        //[SecuredOperation("blog.delete")]
         public IResult Delete(Blog blog)
         {
             fileHelper.Delete(blog.ImagePath);
@@ -51,9 +50,9 @@ namespace Business.Concrete
         }
 
         //get blogs paged (by using pagination helper)
-        public PaginationHelper<Blog> GetBlogsPaginated(int pageNumber, int pageSize)
+        public IDataResult<List<Blog>> GetBlogsPaginated(int pageNumber, int pageSize)
         {
-            return (PaginationHelper<Blog>.ToPagedList(blogDal.GetAll(), pageNumber, pageSize));
+            return new SuccessDataResult<List<Blog>>(blogDal.GetAll().Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList(), Messages.DataListed);
         }
 
 
@@ -72,7 +71,6 @@ namespace Business.Concrete
                 return new SuccessDataResult<List<Blog>>(blogDal.GetAll(x => x.BlogContent.Contains(queryParams.QueryString)
                 || x.BlogTitle.Contains(queryParams.QueryString)).OrderByDescending(x => x.Id).Take(queryParams.Count).ToList(), Messages.DataListed);
             }
-
         }
 
         public IDataResult<BlogDetailDto> GetBlogDetail(int id)
@@ -86,6 +84,7 @@ namespace Business.Concrete
             {
                 blog.ImagePath = fileHelper.Update(file, PathConstants.ImagesPath + blog.ImagePath, PathConstants.ImagesPath);
             }
+            blog.CreatedAt = System.DateTime.Now;
             blogDal.Uptade(blog);
             ValidationTool.Validate(new BlogValidator(), blog);
             return new SuccessResult(Messages.BlogUpdated);
@@ -94,6 +93,11 @@ namespace Business.Concrete
         public IDataResult<Blog> GetByBlogId(int id)
         {
             return new SuccessDataResult<Blog>(blogDal.Get(x => x.Id == id), Messages.DataListed);
+        }
+
+        public IDataResult<List<BlogDetailDto>> GetAllBlogDetails()
+        {
+            return new SuccessDataResult<List<BlogDetailDto>>(blogDal.GetAllBlogDetails(), Messages.DataListed);
         }
 
     }

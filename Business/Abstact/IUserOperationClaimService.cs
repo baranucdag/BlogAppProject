@@ -8,7 +8,7 @@ namespace Business.Abstact
 {
     public interface IUserOperationClaimService
     {
-        PaginationHelper<UserOperationClaimDto> GetAllDetails(int pageNumber, int pageSize);
+        IDataResult<List<UserOperationClaimDto>> GetAllPaged(int pageNumber, int pageSize);
         IDataResult<List<UserOperationClaimDto>> GetDetailsByUserId(int id);
         IResult Add(UserOperationClaim userOperationClaim);
         IResult Delete(UserOperationClaim userOperationClaim);

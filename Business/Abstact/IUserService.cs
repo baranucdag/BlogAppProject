@@ -13,7 +13,7 @@ namespace Business.Abstact
     {
         IDataResult<List<User>> GetAll();
         IDataResult<User> GetByUserId(int id);
-        PaginationHelper<User> GetBlogsPaginated(int pageNumber, int pageSize);
+        IDataResult<List<User>> GetBlogsPaginated(int pageNumber, int pageSize);
         IResult Add(User user);
         IResult Update(User user);
         IResult Delete(User user);

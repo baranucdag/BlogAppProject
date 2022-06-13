@@ -1,11 +1,11 @@
 ﻿using Business.Abstact;
 using Business.Constans;
 using Core.Entities.Concrete;
-using Core.Helpers.PaginationHelper;
 using Core.Results;
 using DataAccess.Abstract;
 using Entities.Dto;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Business.Concrete
 {
@@ -28,11 +28,10 @@ namespace Business.Concrete
             return new SuccessResult();
         }
 
-        public PaginationHelper<UserOperationClaimDto> GetAllDetails(int pageNumber, int pageSize)
+        public IDataResult<List<UserOperationClaimDto>> GetAllPaged(int pageNumber,int pageSize)
         {
-            return PaginationHelper<UserOperationClaimDto>.ToPagedList(userOperationClaimDal.GetOperationClaimList(), pageNumber, pageSize);
+            return new SuccessDataResult<List<UserOperationClaimDto>>(userOperationClaimDal.GetOperationClaimList().Skip((pageNumber - 1)*pageSize).Take(pageSize).ToList(), Messages.DataListed);
         }
-
         public IDataResult<List<UserOperationClaimDto>> GetDetailsByUserId(int id)
         {
             return new SuccessDataResult<List<UserOperationClaimDto>>(userOperationClaimDal.GetDetailsById(x => x.UserId == id), Messages.DataListed);

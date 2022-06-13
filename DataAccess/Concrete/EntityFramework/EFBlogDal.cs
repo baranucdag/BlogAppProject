@@ -27,11 +27,40 @@ namespace DataAccess.Concrete.EntityFramework
                                  BlogContent = t1.BlogContent,
                                  BlogTitle = t1.BlogTitle,
                                  CategoryName = t2.CategoryName,
+                                 CategoryId = t1.CategoryId,
                                  Email = t3.Email,
+                                 UserId = t1.UserId,
                                  CreatedAt = t1.CreatedAt
 
                              };
                 return filter == null ? result.FirstOrDefault() : result.Where(filter).FirstOrDefault();
+
+
+            }
+        }
+
+        public List<BlogDetailDto> GetAllBlogDetails()
+        {
+            using (var context = new DataContext())
+            {
+                var result = from t1 in context.Blogs
+                             join t2 in context.Categories
+                             on t1.CategoryId equals t2.Id
+                             join t3 in context.Users
+                             on t1.UserId equals t3.Id
+                             select new BlogDetailDto()
+                             {
+                                 BlogId = t1.Id,
+                                 BlogContent = t1.BlogContent,
+                                 BlogTitle = t1.BlogTitle,
+                                 CategoryName = t2.CategoryName,
+                                 CategoryId = t1.CategoryId,
+                                 Email = t3.Email,
+                                 UserId = t1.UserId,
+                                 CreatedAt = t1.CreatedAt
+
+                             };
+                return result.ToList();
 
 
             }

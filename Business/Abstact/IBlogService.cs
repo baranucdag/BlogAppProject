@@ -1,5 +1,4 @@
-﻿using Core.Helpers.PaginationHelper;
-using Core.Results;
+﻿using Core.Results;
 using Entities.Concrete;
 using Entities.Dto;
 using Microsoft.AspNetCore.Http;
@@ -12,7 +11,8 @@ namespace Business.Abstact
         IDataResult<List<Blog>> GetAll();
         IDataResult<List<Blog>> GetBlogs(QueryParams queryParams);
         IDataResult<BlogDetailDto> GetBlogDetail(int id);
-        PaginationHelper<Blog> GetBlogsPaginated(int pageNumber, int pageSize);
+        IDataResult<List<Blog>> GetBlogsPaginated(int pageNumber, int pageSize);
+        IDataResult<List<BlogDetailDto>> GetAllBlogDetails();
         IDataResult<Blog> GetByBlogId(int id);
         IResult Add(IFormFile file, Blog blog);
         IResult Update(IFormFile file, Blog blog);

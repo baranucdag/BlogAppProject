@@ -69,6 +69,17 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
+        [HttpGet("GetAllPaged")]
+        public IActionResult GetAllPaged(int pageNumber,int pageSize)
+        {
+            var result = categoryService.GetPaged(pageNumber,pageSize);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
     }
 }
 

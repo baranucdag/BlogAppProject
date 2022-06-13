@@ -17,7 +17,7 @@ namespace WebAPI.Controllers
         [HttpGet("GetAllDetails")]
         public IActionResult GetAllDetails(int pageNumber,int pageSize)
         {
-            var result = userOperationClaimService.GetAllDetails(pageNumber, pageSize);
+            var result = userOperationClaimService.GetAllPaged(pageNumber, pageSize);
             if (result!=null)
             {
                 return Ok(result);

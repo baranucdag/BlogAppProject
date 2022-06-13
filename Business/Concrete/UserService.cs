@@ -5,20 +5,27 @@ using Core.Helpers.PaginationHelper;
 using Core.Results;
 using DataAccess.Abstract;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Business.Concrete
 {
     public class UserService : IUserService
     {
-        IUserDal userDal;
+        private IUserDal userDal;
+        private IBlogService blogService;
 
-        public UserService(IUserDal userDal)
+        public UserService(IUserDal userDal,IBlogService blogService)
         {
             this.userDal = userDal;
+            this.blogService = blogService;
         }
 
         public IResult Add(User user)
         {
+            if (blogService.GetAll().Data.FirstOrDefault(x => x.UserId == user.Id) != null)
+            {
+                return new ErrorResult("There are some blog relelated this user");
+            }
             userDal.Add(user);
             return new SuccessResult(Messages.UserAdded);
         }
@@ -34,12 +41,11 @@ namespace Business.Concrete
             return new SuccessDataResult<List<User>>(userDal.GetAll(), Messages.DataListed);
         }
 
-        //get users paged (by using pagination helper)
-        public PaginationHelper<User> GetBlogsPaginated(int pageNumber, int pageSize)
+        //get users paged (by using Take() and Skip() methods)
+        public IDataResult<List<User>> GetBlogsPaginated(int pageNumber, int pageSize)
         {
-            return (PaginationHelper<User>.ToPagedList(userDal.GetAll(), pageNumber, pageSize));
+            return new SuccessDataResult<List<User>>(userDal.GetAll().Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList());
         }
-
         public IDataResult<User> GetByUserId(int id)
         {
             return new SuccessDataResult<User>(userDal.Get(x => x.Id == id));

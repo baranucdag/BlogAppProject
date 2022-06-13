@@ -11,8 +11,10 @@ namespace Business.Concrete
     public class CategoryService : ICategoryService
     {
         private ICategoryDal categoryDal;
-        public CategoryService(ICategoryDal categoryDal)
+        private IBlogService blogService;
+        public CategoryService(ICategoryDal categoryDal,IBlogService blogService)
         {
+            this.blogService = blogService;
             this.categoryDal = categoryDal;
         }
 
@@ -24,6 +26,10 @@ namespace Business.Concrete
 
         public IResult Delete(Category category)
         {
+            if (blogService.GetAll().Data.FirstOrDefault(x=>x.CategoryId==category.Id)!=null)
+            {
+                return new ErrorResult("There are some blog relelated this category");
+            }
             categoryDal.Delete(category);
             return new SuccessResult();
         }
@@ -36,6 +42,11 @@ namespace Business.Concrete
         public IDataResult<Category> GetById(int id)
         {
             return new SuccessDataResult<Category>(categoryDal.Get(x => x.Id == id),Messages.DataListed);
+        }
+
+        public IDataResult<List<Category>> GetPaged(int pageNumber, int pageSize)
+        {
+            return new SuccessDataResult<List<Category>>(categoryDal.GetAll().Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList(),Messages.DataListed);
         }
 
         public IResult Update(Category category)

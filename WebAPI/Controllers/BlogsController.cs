@@ -27,6 +27,19 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
+        [HttpGet("GetAllDetalis")]
+        public IActionResult GetAllDetalis()
+        {
+            var result = blogService.GetAllBlogDetails();
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
+
+
         [HttpGet("GetBlogs")]
         public IActionResult GetBlogs([FromQuery] QueryParams queryParams)
         {
@@ -42,7 +55,7 @@ namespace WebAPI.Controllers
         [HttpPost("Add")]
         public IActionResult Add([FromForm(Name = ("Image"))] IFormFile file, [FromForm] Blog blog)
         {
-            var result = blogService.Add(file,blog);
+            var result = blogService.Add(file, blog);
             if (result.Success)
             {
                 return Ok(result);
@@ -53,7 +66,7 @@ namespace WebAPI.Controllers
         [HttpPost("Update")]
         public IActionResult Update([FromForm(Name = ("Image"))] IFormFile file, [FromForm] Blog blog)
         {
-            var result = blogService.Update(file,blog);
+            var result = blogService.Update(file, blog);
             if (result.Success)
             {
                 return Ok(result);
@@ -95,16 +108,15 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet("GetBlogsPaged")]
-        public IActionResult GetBlogsPaged(int pageNumber,int pageSize)
+        public IActionResult GetBlogsPaged(int pageNumber, int pageSize)
         {
-            var result = blogService.GetBlogsPaginated(pageNumber,pageSize);
+            var result = blogService.GetBlogsPaginated(pageNumber, pageSize);
             if (result != null)
             {
                 return Ok(result);
             }
             return BadRequest(result);
         }
-
 
     }
 }
