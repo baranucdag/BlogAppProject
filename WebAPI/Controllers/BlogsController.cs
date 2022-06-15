@@ -28,9 +28,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet("GetAllDetalis")]
-        public IActionResult GetAllDetalis()
+        public IActionResult GetAllDetalis(int pageNumber, int pageSize)
         {
-            var result = blogService.GetAllBlogDetails();
+            var result = blogService.GetAllBlogDetails(pageNumber,pageSize);
             if (result.Success)
             {
                 return Ok(result);

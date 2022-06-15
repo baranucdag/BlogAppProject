@@ -25,7 +25,7 @@ namespace Business.Concrete
             this.fileHelper = fileHelper;
         }
 
-        [SecuredOperation("admin,blog.add")]
+        //[SecuredOperation("admin,blog.add")]
         [ValidationAspect(typeof(BlogValidator))]
         public IResult Add(IFormFile file, Blog blog)
         {
@@ -80,11 +80,15 @@ namespace Business.Concrete
 
         public IResult Update(IFormFile file, Blog blog)
         {
-            if (file != null)
+            if (file == null)
             {
-                blog.ImagePath = fileHelper.Update(file, PathConstants.ImagesPath + blog.ImagePath, PathConstants.ImagesPath);
+                string currentImagePath = GetByBlogId(blog.Id).Data.ImagePath;
+                blog.ImagePath = currentImagePath;
             }
-            blog.CreatedAt = System.DateTime.Now;
+            if (blog.ImagePath == null)
+            {
+                blog.ImagePath = fileHelper.Upload(file, PathConstants.ImagesPath);
+            }
             blogDal.Uptade(blog);
             ValidationTool.Validate(new BlogValidator(), blog);
             return new SuccessResult(Messages.BlogUpdated);
@@ -95,9 +99,9 @@ namespace Business.Concrete
             return new SuccessDataResult<Blog>(blogDal.Get(x => x.Id == id), Messages.DataListed);
         }
 
-        public IDataResult<List<BlogDetailDto>> GetAllBlogDetails()
+        public IDataResult<List<BlogDetailDto>> GetAllBlogDetails(int pageNumber, int pageSize)
         {
-            return new SuccessDataResult<List<BlogDetailDto>>(blogDal.GetAllBlogDetails(), Messages.DataListed);
+            return new SuccessDataResult<List<BlogDetailDto>>(blogDal.GetAllBlogDetails().OrderByDescending(x=>x.BlogId).Skip((pageNumber-1)*pageSize).Take(pageSize).ToList(), Messages.DataListed);
         }
 
     }

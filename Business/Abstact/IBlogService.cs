@@ -12,7 +12,7 @@ namespace Business.Abstact
         IDataResult<List<Blog>> GetBlogs(QueryParams queryParams);
         IDataResult<BlogDetailDto> GetBlogDetail(int id);
         IDataResult<List<Blog>> GetBlogsPaginated(int pageNumber, int pageSize);
-        IDataResult<List<BlogDetailDto>> GetAllBlogDetails();
+        IDataResult<List<BlogDetailDto>> GetAllBlogDetails(int pageNumber, int pageSize);
         IDataResult<Blog> GetByBlogId(int id);
         IResult Add(IFormFile file, Blog blog);
         IResult Update(IFormFile file, Blog blog);

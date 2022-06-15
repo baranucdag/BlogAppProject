@@ -1,10 +1,10 @@
 ﻿using Business.Abstact;
 using Business.Constans;
 using Core.Entities.Concrete;
-using Core.Helpers.PaginationHelper;
 using Core.Results;
 using DataAccess.Abstract;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Business.Concrete
 {
@@ -32,9 +32,9 @@ namespace Business.Concrete
         {
             return new SuccessDataResult<List<OperationClaim>>(operationClaimDal.GetAll(), Messages.DataListed);
         }
-        public PaginationHelper<OperationClaim> GetAllCalimsPaged(int pageNumber, int pageSize)
+        public IDataResult<List<OperationClaim>> GetAllCalimsPaged(int pageNumber, int pageSize)
         {
-            return (PaginationHelper<OperationClaim>.ToPagedList(operationClaimDal.GetAll(), pageNumber, pageSize));
+            return new SuccessDataResult<List<OperationClaim>>(operationClaimDal.GetAll().Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList(), Messages.DataListed);
         }
 
         public IDataResult<OperationClaim> GetByClaimById(int id)

@@ -1,7 +1,6 @@
 ﻿using Business.Abstact;
 using Business.Constans;
 using Core.Entities.Concrete;
-using Core.Helpers.PaginationHelper;
 using Core.Results;
 using DataAccess.Abstract;
 using System.Collections.Generic;
