@@ -28,7 +28,7 @@ namespace Business.Concrete
         {
             if (blogService.GetAll().Data.FirstOrDefault(x=>x.CategoryId==category.Id)!=null)
             {
-                return new ErrorResult("There are some blog relelated this category");
+                return new ErrorResult("There are some relelated data with this category");
             }
             categoryDal.Delete(category);
             return new SuccessResult();

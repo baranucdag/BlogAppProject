@@ -11,9 +11,11 @@ namespace Business.Concrete
     public class OperationClaimService : IOperationClaimService
     {
         private IOperationClaimDal operationClaimDal;
-        public OperationClaimService(IOperationClaimDal operationClaimDal)
+        private IUserOperationClaimDal userOperationClaimDal;
+        public OperationClaimService(IOperationClaimDal operationClaimDal, IUserOperationClaimDal userOperationClaimDal)
         {
             this.operationClaimDal = operationClaimDal;
+            this.userOperationClaimDal = userOperationClaimDal;
         }
 
         public IResult Add(OperationClaim operationClaim)
@@ -24,6 +26,10 @@ namespace Business.Concrete
 
         public IResult Delete(OperationClaim operationClaim)
         {
+            if (userOperationClaimDal.GetAll().FirstOrDefault(x=>x.OperationClaimId == operationClaim.Id) != null)
+            {
+                return new ErrorResult("Theere are some data releated this opeation claim, fist delete these data");
+            }
             operationClaimDal.Delete(operationClaim);
             return new SuccessResult();
         }

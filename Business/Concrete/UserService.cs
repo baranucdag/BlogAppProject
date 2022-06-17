@@ -12,11 +12,13 @@ namespace Business.Concrete
     {
         private IUserDal userDal;
         private IBlogService blogService;
+        private IUserOperationClaimDal userOperationClaimDal;
 
-        public UserService(IUserDal userDal,IBlogService blogService)
+        public UserService(IUserDal userDal,IBlogService blogService,IUserOperationClaimDal userOperationClaimDal)
         {
             this.userDal = userDal;
             this.blogService = blogService;
+            this.userOperationClaimDal = userOperationClaimDal;
         }
 
         public IResult Add(User user)
@@ -31,6 +33,10 @@ namespace Business.Concrete
 
         public IResult Delete(User user)
         {
+            if (blogService.GetAll().Data.FirstOrDefault(x=>x.UserId == user.Id)!=null || userOperationClaimDal.GetAll().FirstOrDefault(x=>x.UserId==user.Id)!=null)
+            {
+                return new ErrorResult("There are some data releated this user, first delete these are");
+            }
             userDal.Delete(user);
             return new SuccessResult(Messages.UserDeleted);
         }

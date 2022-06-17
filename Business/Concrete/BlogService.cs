@@ -1,5 +1,4 @@
 ﻿using Business.Abstact;
-using Business.BusinessAspects.Autofac;
 using Business.Constans;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects;
@@ -19,10 +18,14 @@ namespace Business.Concrete
     {
         private IBlogDal blogDal;
         private IFileHelper fileHelper;
-        public BlogService(IBlogDal blogDal, IFileHelper fileHelper)
+        private ICommentDal commentDal;
+        private IFavDal favDal;
+        public BlogService(IBlogDal blogDal, IFileHelper fileHelper, ICommentDal commentDal, IFavDal favDal)
         {
             this.blogDal = blogDal;
             this.fileHelper = fileHelper;
+            this.commentDal = commentDal;
+            this.favDal = favDal;
         }
 
         //[SecuredOperation("admin,blog.add")]
@@ -36,10 +39,14 @@ namespace Business.Concrete
             blogDal.Add(blog);
             return new SuccessResult("blog added");
         }
-
         public IResult Delete(Blog blog)
         {
-            fileHelper.Delete(blog.ImagePath);
+            if (commentDal.GetAll().FirstOrDefault(x => x.BlogId == blog.Id) != null || favDal.GetAll().FirstOrDefault(x => x.BlogId == blog.Id) != null)
+            {
+                return new ErrorResult("There are some data releated with this blog, first delete these data !");
+            }
+            string fullImagePath = "wwwroot\\uploads\\images\\" + blog.ImagePath;
+            fileHelper.Delete(fullImagePath);
             blogDal.Delete(blog);
             return new SuccessResult(Messages.BlogDeleted);
         }
@@ -49,7 +56,6 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Blog>>(blogDal.GetAll().OrderBy(x => x.Id).ToList(), Messages.DataListed);
         }
 
-        //get blogs paged (by using pagination helper)
         public IDataResult<List<Blog>> GetBlogsPaginated(int pageNumber, int pageSize)
         {
             return new SuccessDataResult<List<Blog>>(blogDal.GetAll().Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList(), Messages.DataListed);
@@ -58,7 +64,6 @@ namespace Business.Concrete
 
         public IDataResult<List<Blog>> GetBlogs(QueryParams queryParams)
         {
-            // check total count of data (to hide 'see more blog' button)
             if (queryParams.SortType == false)
             {
                 if (string.IsNullOrEmpty(queryParams.QueryString)) return new SuccessDataResult<List<Blog>>(blogDal.GetAll().Take(queryParams.Count).ToList(), Messages.DataListed);
@@ -85,7 +90,7 @@ namespace Business.Concrete
                 string currentImagePath = GetByBlogId(blog.Id).Data.ImagePath;
                 blog.ImagePath = currentImagePath;
             }
-            if (blog.ImagePath == null)
+            if (blog.ImagePath == null && file != null)
             {
                 blog.ImagePath = fileHelper.Upload(file, PathConstants.ImagesPath);
             }
@@ -101,7 +106,7 @@ namespace Business.Concrete
 
         public IDataResult<List<BlogDetailDto>> GetAllBlogDetails(int pageNumber, int pageSize)
         {
-            return new SuccessDataResult<List<BlogDetailDto>>(blogDal.GetAllBlogDetails().OrderByDescending(x=>x.BlogId).Skip((pageNumber-1)*pageSize).Take(pageSize).ToList(), Messages.DataListed);
+            return new SuccessDataResult<List<BlogDetailDto>>(blogDal.GetAllBlogDetails().OrderByDescending(x => x.BlogId).Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList(), Messages.DataListed);
         }
 
     }
