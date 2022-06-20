@@ -24,26 +24,6 @@ namespace Core.Helpers
 
         }
 
-        // Uptade - update an ımage
-        public string Update(IFormFile file, string filePath, string root)
-        {
-            try
-            {
-                if (File.Exists(filePath))
-                {
-                    File.Delete(filePath);
-                }
-                return Upload(file, root);
-            }
-            catch (Exception e)
-            {
-
-                throw new Exception(e.Message);
-            }
-
-        }
-
-
         // Upload - Upload an ımage by file and root
         public string Upload(IFormFile file, string root)
         {
