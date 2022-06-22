@@ -18,6 +18,10 @@ namespace Business.Concrete
         }
         public IResult Add(UserOperationClaim userOperationClaim)
         {
+            if (userOperationClaimDal.GetAll(x=>x.OperationClaimId==userOperationClaim.OperationClaimId && x.UserId == userOperationClaim.UserId).FirstOrDefault()!=null)
+            {
+                return new ErrorResult("This user operation claim is already exist!");
+            }
             userOperationClaimDal.Add(userOperationClaim);
             return new SuccessResult();
         }
@@ -25,7 +29,7 @@ namespace Business.Concrete
         public IResult Delete(UserOperationClaim userOperationClaim)
         {
             userOperationClaimDal.Delete(userOperationClaim);
-            return new SuccessResult();
+            return new SuccessResult("User Operation Claim deleted.");
         }
 
         public IDataResult<List<UserOperationClaimDto>> GetAllPaged(int pageNumber,int pageSize)
