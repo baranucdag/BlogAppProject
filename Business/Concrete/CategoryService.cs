@@ -28,10 +28,10 @@ namespace Business.Concrete
         {
             if (blogService.GetAll().Data.FirstOrDefault(x=>x.CategoryId==category.Id)!=null)
             {
-                return new ErrorResult("There are some relelated data with this category");
+                return new ErrorResult("There are some relelated data with this category, cannot delete category directly, first delete releated data!");
             }
             categoryDal.Delete(category);
-            return new SuccessResult();
+            return new SuccessResult("Category deleted.");
         }
 
         public IDataResult<List<Category>> GetAll()

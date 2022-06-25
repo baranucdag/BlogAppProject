@@ -20,6 +20,7 @@
         public static string EmailNullError = "Email cannot be null, please check it!";
         public static string FavAdded = " Fav added succesfully!";
         public static string FavDeleted = " Fav deleted succesfully!";
+        public static string CantDelete = "There are some data releated with this data, first delete these data !";
     }
 }
 

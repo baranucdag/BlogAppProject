@@ -1,4 +1,5 @@
 ﻿using Business.Abstact;
+using Business.BusinessAspects.Autofac;
 using Business.Constans;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects;
@@ -28,7 +29,7 @@ namespace Business.Concrete
             this.favDal = favDal;
         }
 
-        //[SecuredOperation("admin,blog.add")]
+        [SecuredOperation("admin,blog.add")]
         [ValidationAspect(typeof(BlogValidator))]
         public IResult Add(IFormFile file, Blog blog)
         {
@@ -37,18 +38,39 @@ namespace Business.Concrete
             blog.CreatedAt = System.DateTime.Now;
             blog.ImagePath = fileHelper.Upload(file, PathConstants.ImagesPath);
             blogDal.Add(blog);
-            return new SuccessResult("blog added");
+            return new SuccessResult(Messages.BlogAdded);
         }
         public IResult Delete(Blog blog)
         {
             if (commentDal.GetAll().FirstOrDefault(x => x.BlogId == blog.Id) != null || favDal.GetAll().FirstOrDefault(x => x.BlogId == blog.Id) != null)
             {
-                return new ErrorResult("There are some data releated with this blog, first delete these data !");
+                List<Fav> releatedFavs = new List<Fav>((IEnumerable<Fav>)favDal.GetAll().FirstOrDefault(x => x.BlogId == blog.Id));
+                List<Comment> releatedComments = new List<Comment>((IEnumerable<Comment>)commentDal.GetAll().FirstOrDefault(x => x.BlogId == blog.Id));
+                if (releatedComments != null)
+                {
+                    foreach (var item in releatedComments)
+                    {
+                        this.commentDal.Delete(item);
+                    }
+                }
+
+                if (releatedComments != null)
+                {
+                    foreach (var item in releatedFavs)
+                    {
+                        this.favDal.Delete(item);
+                    }
+                }
+                return new SuccessResult(Messages.BlogDeleted);
+
             }
-            string fullImagePath = "wwwroot\\uploads\\images\\" + blog.ImagePath;
-            fileHelper.Delete(fullImagePath);
-            blogDal.Delete(blog);
-            return new SuccessResult(Messages.BlogDeleted);
+            else
+            {
+                string fullImagePath = "wwwroot\\uploads\\images\\" + blog.ImagePath;
+                fileHelper.Delete(fullImagePath);
+                blogDal.Delete(blog);
+                return new SuccessResult(Messages.BlogDeleted);
+            }
         }
 
         public IDataResult<List<Blog>> GetAll()
@@ -60,7 +82,6 @@ namespace Business.Concrete
         {
             return new SuccessDataResult<List<Blog>>(blogDal.GetAll().Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList(), Messages.DataListed);
         }
-
 
         public IDataResult<List<Blog>> GetBlogs(QueryParams queryParams)
         {

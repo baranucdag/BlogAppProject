@@ -23,7 +23,7 @@ namespace Business.Concrete
                 return new ErrorResult("This user operation claim is already exist!");
             }
             userOperationClaimDal.Add(userOperationClaim);
-            return new SuccessResult();
+            return new SuccessResult("User operation claim added");
         }
 
         public IResult Delete(UserOperationClaim userOperationClaim)

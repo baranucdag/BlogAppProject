@@ -23,10 +23,6 @@ namespace Business.Concrete
 
         public IResult Add(User user)
         {
-            if (blogService.GetAll().Data.FirstOrDefault(x => x.UserId == user.Id) != null)
-            {
-                return new ErrorResult("There are some blog relelated this user");
-            }
             userDal.Add(user);
             return new SuccessResult(Messages.UserAdded);
         }
