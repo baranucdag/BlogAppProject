@@ -53,5 +53,15 @@ namespace Business.Concrete
             favDal.DeleteById(blogId, userId);
             return new SuccessResult(Messages.FavDeleted);
         }
+
+        public IResult DeleteByBlogId(int blogId)
+        {
+            List<Fav> releatedFavs = new List<Fav>(favDal.GetAll(x=>x.BlogId == blogId));
+            foreach (var item in releatedFavs)
+            {
+                favDal.Delete(item);
+            }
+            return new SuccessResult();
+        }
     }
 }

@@ -16,11 +16,11 @@
         public static string AccessTokenCreated = "logged in succesfully";
         public static string UserAdded = "user added";
         public static string UserUpdated = "user updated";
-        public static string UserDeleted = "user updated";
+        public static string UserDeleted = "user deleted";
         public static string EmailNullError = "Email cannot be null, please check it!";
         public static string FavAdded = " Fav added succesfully!";
         public static string FavDeleted = " Fav deleted succesfully!";
-        public static string CantDelete = "There are some data releated with this data, first delete these data !";
+        public static string CantDelete = "There are some data releated with this data, first delete these are !";
     }
 }
 

@@ -33,6 +33,16 @@ namespace Business.Concrete
             return new SuccessResult();
         }
 
+        public IResult DeleteCommentsByBlogId(int blogId)
+        {
+            List<Comment> releatedComments = new List<Comment>(commentDal.GetAll(x=>x.BlogId == blogId));
+            foreach (var item in releatedComments)
+            {
+                commentDal.Delete(item);
+            }
+            return new SuccessResult();
+        }
+
         public IDataResult<List<Comment>> GetAll()
         {
             return new SuccessDataResult<List<Comment>>(commentDal.GetAll(), Messages.DataListed);

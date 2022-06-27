@@ -1,10 +1,6 @@
 ﻿using Core.Results;
 using Entities.Concrete;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Business.Abstact
 {
@@ -16,6 +12,7 @@ namespace Business.Abstact
         IDataResult<int> GetAllCountByBlogId(int id);
         IResult Delete(Fav fav);
         IResult DeleteById(int blogId, int userId);
+        IResult DeleteByBlogId(int blogId);
         IResult Add(Fav fav);
     }
 }

@@ -31,7 +31,7 @@ namespace Business.Concrete
         {
             if (blogService.GetAll().Data.FirstOrDefault(x=>x.UserId == user.Id)!=null || userOperationClaimDal.GetAll().FirstOrDefault(x=>x.UserId==user.Id)!=null)
             {
-                return new ErrorResult("There are some data releated this user, first delete these are");
+                return new ErrorResult("There are some data releated with this user, first delete these are");
             }
             userDal.Delete(user);
             return new SuccessResult(Messages.UserDeleted);

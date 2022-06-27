@@ -19,17 +19,17 @@ namespace Business.Concrete
     {
         private IBlogDal blogDal;
         private IFileHelper fileHelper;
-        private ICommentDal commentDal;
-        private IFavDal favDal;
-        public BlogService(IBlogDal blogDal, IFileHelper fileHelper, ICommentDal commentDal, IFavDal favDal)
+        private ICommentService commentService;
+        private IFavService favService;
+        public BlogService(IBlogDal blogDal, IFileHelper fileHelper, ICommentService commentService, IFavService favService)
         {
             this.blogDal = blogDal;
             this.fileHelper = fileHelper;
-            this.commentDal = commentDal;
-            this.favDal = favDal;
+            this.commentService = commentService;
+            this.favService = favService;
         }
 
-        [SecuredOperation("admin,blog.add")]
+        //[SecuredOperation("admin,blog.add")]
         [ValidationAspect(typeof(BlogValidator))]
         public IResult Add(IFormFile file, Blog blog)
         {
@@ -37,40 +37,27 @@ namespace Business.Concrete
             // SecuredOperationTool securedOperation = new SecuredOperationTool("admin");
             blog.CreatedAt = System.DateTime.Now;
             blog.ImagePath = fileHelper.Upload(file, PathConstants.ImagesPath);
+            if(blog.ImagePath == "file type is not allowed")
+            {
+                return new ErrorResult(blog.ImagePath);
+            }
             blogDal.Add(blog);
             return new SuccessResult(Messages.BlogAdded);
         }
         public IResult Delete(Blog blog)
         {
-            if (commentDal.GetAll().FirstOrDefault(x => x.BlogId == blog.Id) != null || favDal.GetAll().FirstOrDefault(x => x.BlogId == blog.Id) != null)
+            if (commentService.GetByBlogId(blog.Id)!=null)
             {
-                List<Fav> releatedFavs = new List<Fav>((IEnumerable<Fav>)favDal.GetAll().FirstOrDefault(x => x.BlogId == blog.Id));
-                List<Comment> releatedComments = new List<Comment>((IEnumerable<Comment>)commentDal.GetAll().FirstOrDefault(x => x.BlogId == blog.Id));
-                if (releatedComments != null)
-                {
-                    foreach (var item in releatedComments)
-                    {
-                        this.commentDal.Delete(item);
-                    }
-                }
-
-                if (releatedComments != null)
-                {
-                    foreach (var item in releatedFavs)
-                    {
-                        this.favDal.Delete(item);
-                    }
-                }
-                return new SuccessResult(Messages.BlogDeleted);
-
+                commentService.DeleteCommentsByBlogId(blog.Id);
             }
-            else
+            if (favService.DeleteByBlogId(blog.Id) != null)
             {
-                string fullImagePath = "wwwroot\\uploads\\images\\" + blog.ImagePath;
+                favService.DeleteByBlogId(blog.Id);
+            }
+            string fullImagePath = "wwwroot\\uploads\\images\\" + blog.ImagePath;
                 fileHelper.Delete(fullImagePath);
                 blogDal.Delete(blog);
                 return new SuccessResult(Messages.BlogDeleted);
-            }
         }
 
         public IDataResult<List<Blog>> GetAll()

@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Core.Results;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.IO;
+using System.Linq;
 
 namespace Core.Helpers
 {
@@ -38,7 +40,9 @@ namespace Core.Helpers
                 string guid = Guid.NewGuid().ToString();
                 string filePath = guid + extension;
 
-
+                string[] allowExtensions = { ".jpg", ".jpeg", ".png" };
+                if (allowExtensions.FirstOrDefault(x => x.ToUpper() == extension.ToUpper()) != null)
+                {
                     using (FileStream fileStream = File.Create(root + filePath))
                     {
 
@@ -46,6 +50,10 @@ namespace Core.Helpers
                         fileStream.Flush();
                         return filePath;
                     }
+                }
+                else return "file type is not allowed";
+
+
             }
             return "file is empty";
         }

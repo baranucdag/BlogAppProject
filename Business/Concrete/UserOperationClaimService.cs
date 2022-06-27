@@ -1,4 +1,5 @@
 ﻿using Business.Abstact;
+using Business.BusinessAspects.Autofac;
 using Business.Constans;
 using Core.Entities.Concrete;
 using Core.Results;
@@ -16,6 +17,8 @@ namespace Business.Concrete
         {
             this.userOperationClaimDal = userOperationClaimDal;
         }
+
+        [SecuredOperation("admin")]
         public IResult Add(UserOperationClaim userOperationClaim)
         {
             if (userOperationClaimDal.GetAll(x=>x.OperationClaimId==userOperationClaim.OperationClaimId && x.UserId == userOperationClaim.UserId).FirstOrDefault()!=null)
